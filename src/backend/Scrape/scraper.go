@@ -23,7 +23,7 @@ func main()	{
 	})
 
 	//Ubah link webnya disini
-	c.Visit("https://id.wikipedia.org/wiki/Vektor")
+	c.Visit("https://en.wikipedia.org/wiki/Graph_traversal")
 	//c.Visit("https://id.wikipedia.org/wiki/Institut_Teknologi_Bandung")
 	// c.Visit("https://id.wikipedia.org/wiki/Universitas_Indonesia")
 }
