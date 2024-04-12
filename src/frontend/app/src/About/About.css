@@ -1,0 +1,32 @@
+.aboutus{
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    padding-bottom: 25px;
+    color:#1D201F;
+    background-color:rgba(255, 255, 255, 0.6);
+}
+
+.aboutus h3{
+    font-size: xx-large;
+    padding-top: 20px;
+    font-family: "Pixelify Sans";
+    text-align: center;
+    margin: 0;
+}
+
+/* For larger screens, display cards in a row */
+.setofcards {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+  }
+  
+  /* For smaller screens, display cards in a column */
+  @media (max-width: 768px) {
+    .setofcards {
+      flex-direction: column;
+      align-items: center; /* Align cards in the center horizontally */
+    }
+  }
+  

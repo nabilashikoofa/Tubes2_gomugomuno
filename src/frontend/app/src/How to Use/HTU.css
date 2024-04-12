@@ -1,0 +1,21 @@
+.htu{
+    /* background-color:rgba(252, 251, 214, 0.6); */
+    width: 100%;
+    padding-bottom: 40px;
+    color: aliceblue;
+    padding-left:10px;
+}
+
+.htu h3{
+    justify-content: center;
+    margin: auto;
+    font-size: xx-large;
+    padding-top: 20px;
+    font-family: "Pixelify Sans";
+}
+.htucontent{
+    font-size: larger;
+    width: 80%;
+    justify-content: center;
+    margin: auto;
+}

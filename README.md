@@ -10,7 +10,6 @@
 * [The Game](#the-algorithm-👾)
 * [Requirements](#requirements-🫧)
 * [Setting Up](#setting-up-🍀)
-* [Usage](#how-to-run-🌿)
 * [How To Use](#how-to-use-🪄)
 
 ## The Algorithm 👾
@@ -34,11 +33,13 @@ IDS is a combination of depth-first search (DFS) and breadth-first search (BFS).
 
 ## Setting Up 🍀
 - Clone this repository on your terminal `https://github.com/nabilashikoofa/Tubes2_gomugomuno.git`
-
-## How to Run 🌿
-
+- Go to the `app` directory by using `cd src/frontend/app`
+- Type in `npm start` to start the server on your local browser
 
 ## How to Use 🪄
-
+- Input the start node and end node with words as the Wikipedia title page
+- Choose between using BFS or IDS algorithm
+- Click the start button when you are ready!
+- The result will be displayed below as a graph
 
 ## Thankyou for trying our program :>
