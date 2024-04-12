@@ -13,10 +13,11 @@ root.render(
     <Header/>
     <div class="blank" id='blank'></div>
     <App />
+    <HTU/>
     <Content/>
     <div class="dark-overlay"></div>
     {/* <div className='tes'></div> */}
-    <HTU/>
+    <br></br>
     <About/>
     </>
 );

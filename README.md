@@ -8,6 +8,7 @@
 
 ## Table of Contents 💫
 * [The Game](#the-algorithm-👾)
+* [Tools](#tools-🔨)
 * [Requirements](#requirements-🫧)
 * [Setting Up](#setting-up-🍀)
 * [How To Use](#how-to-use-🪄)
@@ -28,8 +29,11 @@ IDS is a combination of depth-first search (DFS) and breadth-first search (BFS).
 - If the goal is not found and there are still nodes to explore at the current depth limit, increment the depth limit and repeat the search.
 - Repeat until final destination node is found or the entire search space is explored.
 
-## Requirements 🫧
+## Tools 🔨
+- React
 
+## Requirements 🫧
+- Have npm installed with `npm install`
 
 ## Setting Up 🍀
 - Clone this repository on your terminal `https://github.com/nabilashikoofa/Tubes2_gomugomuno.git`
@@ -39,7 +43,6 @@ IDS is a combination of depth-first search (DFS) and breadth-first search (BFS).
 ## How to Use 🪄
 - Input the start node and end node with words as the Wikipedia title page
 - Choose between using BFS or IDS algorithm
-- Click the start button when you are ready!
 - The result will be displayed below as a graph
 
 ## Thankyou for trying our program :>
