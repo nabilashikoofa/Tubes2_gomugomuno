@@ -4,25 +4,33 @@ import (
 	"fmt"
 	"github.com/gocolly/colly"
 	"strings"
+	"bufio"
+	"os"
 )
 
 func main() {
 	var input string
 
-	fmt.Println("Masukkan URL website:")
+	fmt.Println("Masukkan Title Wikipedia:")
 
-	fmt.Scanln(&input) // Kim_Soo-hyun
-	url := "https://en.wikipedia.org/wiki/" + input
-	
-	scraper(url)
+	input, _ = bufio.NewReader(os.Stdin).ReadString('\n')
+	input = strings.TrimSpace(input)
+
+	converted := convert(input)
+	fmt.Println(converted)
+
+	links := scraper(converted) 
+	fmt.Println(links)
 }
 
-func scraper(website string)	{
+
+// Input with underscore
+// Output an Array
+func scraper(title string) []string {
 	c := colly.NewCollector()
 
 	var links []string
 
-	//Ubah class dari inspect
 	c.OnHTML("div.mw-page-container a[href^='/wiki/']", func(h *colly.HTMLElement) {
 		link := h.Request.AbsoluteURL(h.Attr("href"))
 		link = strings.TrimPrefix(link, "https://en.wikipedia.org/wiki/")
@@ -30,14 +38,18 @@ func scraper(website string)	{
 		if !contains(links, link) {
 			links = append(links, link)
 		}
-		// yg ini buat masuk ke link baru
-		// c.Visit(h.Request.AbsoluteURL(h.Attr("href")))
 	})
 
-	//Ubah link webnya disini
-	c.Visit(website)
+	c.Visit("https://en.wikipedia.org/wiki/" + title)
 
-	fmt.Println(links)
+	return links
+}
+
+// Input without underscore
+// Output with underscore 
+func convert(input string) string {
+	converted := strings.ReplaceAll(input, " ", "_")
+	return converted
 }
 
 func contains(s []string, str string) bool {
