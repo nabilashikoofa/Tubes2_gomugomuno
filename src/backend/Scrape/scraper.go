@@ -6,7 +6,18 @@ import (
 	"strings"
 )
 
-func main()	{
+func main() {
+	var input string
+
+	fmt.Println("Masukkan URL website:")
+
+	fmt.Scanln(&input) // Kim_Soo-hyun
+	url := "https://en.wikipedia.org/wiki/" + input
+	
+	scraper(url)
+}
+
+func scraper(website string)	{
 	c := colly.NewCollector()
 
 	var links []string
@@ -23,12 +34,8 @@ func main()	{
 		// c.Visit(h.Request.AbsoluteURL(h.Attr("href")))
 	})
 
-	c.OnRequest(func(r *colly.Request) {
-		fmt.Println("visiting", r.URL)
-	})
-
 	//Ubah link webnya disini
-	c.Visit("https://en.wikipedia.org/wiki/Graph_traversal")
+	c.Visit(website)
 
 	fmt.Println(links)
 }
@@ -41,3 +48,5 @@ func contains(s []string, str string) bool {
 	}
 	return false
 }
+
+
