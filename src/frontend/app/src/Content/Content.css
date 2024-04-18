@@ -1,3 +1,8 @@
+.maincontent{
+    display: flex;
+    flex-direction: column;    
+}
+
 .content{
     background-color: rgb(255, 255, 240);
     box-shadow: 0px 4px 2px #1D201F;

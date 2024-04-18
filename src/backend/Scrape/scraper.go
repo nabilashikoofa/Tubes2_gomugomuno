@@ -1,27 +1,24 @@
-package main
+package Scrape
 
 import (
-	"fmt"
 	"github.com/gocolly/colly"
 	"strings"
-	"bufio"
-	"os"
 )
 
-func main() {
-	var input string
+// func main() {
+// 	var input string
 
-	fmt.Println("Masukkan Title Wikipedia:")
+// 	fmt.Println("Masukkan Title Wikipedia:")
 
-	input, _ = bufio.NewReader(os.Stdin).ReadString('\n')
-	input = strings.TrimSpace(input)
+// 	input, _ = bufio.NewReader(os.Stdin).ReadString('\n')
+// 	input = strings.TrimSpace(input)
 
-	converted := convert(input)
-	fmt.Println(converted)
+// 	converted := convert(input)
+// 	fmt.Println(converted)
 
-	links := scraper(converted) 
-	fmt.Println(links)
-}
+// 	links := scraper(converted) 
+// 	fmt.Println(links)
+// }
 
 
 // Input with underscore

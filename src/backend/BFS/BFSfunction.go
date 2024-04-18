@@ -43,9 +43,11 @@ func printAllQueue(queue []*Node){
 	for  i := 0; i < len(queue); i++ {
 		fmt.Println("Title:", queue[i].Title)
 		fmt.Println("Parents:")
+		fmt.Print("(")
 		for j := 0; j < len(queue[i].Parents); j++ {
 			fmt.Printf("Title: %s, Parents: %s\n", queue[i].Title, strings.Join(queue[i].Parents, ", "))
 		}
+		fmt.Print(")")
 		fmt.Println()
 	}
 }

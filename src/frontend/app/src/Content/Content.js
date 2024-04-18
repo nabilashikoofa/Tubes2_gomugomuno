@@ -3,8 +3,9 @@ import './Content.css'
 
 
 export default function Content(){
-    const [startNode, setStartNode] = useState("");
-    const [endNode, setEndNode] = useState("");
+    const [startNode, setStartNode] = useState();
+    const [endNode, setEndNode] = useState();
+    const [result, setResult] = useState();
 
     const handleStartInputChange = (event) => {
         setStartNode(event.target.value);
@@ -26,7 +27,8 @@ export default function Content(){
         console.log("End Node:", endNode);
         // Send these values to the server using fetch or any other method
     };
-    return <div className='content' id="content">
+    return  <div className="maincontent">
+        <div className='content' id="content">
             <h3>Enter the nodes</h3>
             <div className="inputform">
                 <div className="takeinput">
@@ -36,7 +38,7 @@ export default function Content(){
                         id="startNode"
                         value={startNode}
                         onChange={handleStartInputChange}
-                    />
+                        />
                 </div>
                 <br></br>
                 <div className="takeinput">
@@ -54,4 +56,11 @@ export default function Content(){
                 </div>
             </div>
         </div>
+        {/* {result && ( */}
+        <div className="result">
+            <h3>Result</h3>
+            <p>{result}</p>
+        </div>
+        {/* )} */}
+    </div> 
 }
