@@ -14,7 +14,6 @@ func printStrings(slice []string) {
 	}
 }
 // ini temporary ak pindahin soalnya mau eksperimen
-// and frickn golang wont let me use the package scraper here
 func scraper(title string) []string {
 	start := time.Now()
 	c := colly.NewCollector()
@@ -93,7 +92,7 @@ func BFS(startTitle string, endNode string) ([][]string, int64, int, int){
 		numofcheckednodes++
 		visitedNodes = append(visitedNodes, queue[0])	// mark as visited
 		currentNode := queue[0] //current branch is the start of the queue, dequeue
-		fmt.Print(">>>>>>>>>>>>>> Skrg kita cek Node:")
+		fmt.Println(">>>>>>>>>>>>>> Skrg kita cek Node: ")
 		currentNode.Print()
 		fmt.Println()
 		queue = queue[1:]
@@ -113,6 +112,7 @@ func BFS(startTitle string, endNode string) ([][]string, int64, int, int){
 				currentNode.Parents = append(currentNode.Parents, currentNode.Title)		// also add the endNode to the list of results, so if we have Basf with B as endNode, we get {a,s,f,b}
 				result = append(result, currentNode.Parents)
 				hasFound = true
+				// ini testing 1 solusi dulu ya:")"
 				fmt.Println("GOT BREAK🔨🔨")
 				break
 			}

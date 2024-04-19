@@ -3,6 +3,7 @@ package main
 import (
 	// "encoding/json"
 	"Tubes2_gomugomuno/BFS"
+	"Tubes2_gomugomuno/Scrape"
 	"fmt"
 	"net/http"
 	// "Tubes2_gomugomuno/IDS"
@@ -14,6 +15,7 @@ import (
 // INI BLM AKU CHECK YA
 // VALIDASI LINK INPUTAN
 func isValidLink(title string) bool {
+    title = Scrape.Convert(title)
 	url := fmt.Sprintf("https://en.wikipedia.org/wiki/%s", title)
 	resp, err := http.Head(url)
 	if err != nil {
