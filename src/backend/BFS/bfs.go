@@ -70,8 +70,10 @@ func BFS(startTitle string, endNode string) ([][]string, int64, int, int){
 	numofcheckednodes := 0
 	var queue []*Node		// simpul hidup
 	var result [][]string		// list of answers
-	var visitedNodes []*Node // list of visitedNodes, including the ones that had been dequeued 
+	// var visitedNodes []*Node // list of visitedNodes, including the ones that had been dequeued 
+	visited := make(map[string]string)
 	queue = append(queue, firstNode)	// masukkan node pertama ke dalam queue simpul hidup
+	visited[firstNode.Title] = ""
 	temptitle := scraper(startTitle)
 	for _,title := range temptitle{
 		var tempparent []string = append(firstNode.Parents, startTitle) 
@@ -90,7 +92,7 @@ func BFS(startTitle string, endNode string) ([][]string, int64, int, int){
 		fmt.Print("Panjang queue skrg:")
 		fmt.Println(len(queue))
 		numofcheckednodes++
-		visitedNodes = append(visitedNodes, queue[0])	// mark as visited
+		// visitedNodes = append(visitedNodes, queue[0])	// mark as visited
 		currentNode := queue[0] //current branch is the start of the queue, dequeue
 		fmt.Println(">>>>>>>>>>>>>> Skrg kita cek Node: ")
 		currentNode.Print()
@@ -129,10 +131,19 @@ func BFS(startTitle string, endNode string) ([][]string, int64, int, int){
 				// fmt.Println("")
 				// fmt.Println("Node A")
 				// A.Print()
-				if (!isVisited(A,visitedNodes)){
-					queue = append(queue, A)
-					visitedNodes = append(visitedNodes, A)		// mark newlymade Nodes as visited
-				}
+				
+				// if (!isVisited(A,visitedNodes)){
+				// 	queue = append(queue, A)
+				// 	visitedNodes = append(visitedNodes, A)		// mark newlymade Nodes as visited
+				// }
+
+				lastVisited, ok := visited[A.Title]
+                if ok && lastVisited == A.Parents[len(A.Parents)-1] {
+                    continue // Skip if already visited with the same parent
+                }
+				queue = append(queue, A)
+                visited[A.Title] = A.Parents[len(A.Parents)-1]
+
 			}
 		}
 	}

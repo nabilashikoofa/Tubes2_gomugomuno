@@ -58,7 +58,7 @@ func main() {
     var numofcheckednodes int
     fmt.Println("Starting Main...")
     // bfs.BFS("Vector","Vector_space")
-	result,elapsed,shortestlength,numofcheckednodes = bfs.BFS("Vector","Energy")
+	result,elapsed,shortestlength,numofcheckednodes = bfs.BFS("Vector","Algebra") //45613 - 38262 (2 degrees)
     fmt.Println("Algorithm execution time:", elapsed, "ms")
     printResult(result)
     fmt.Println("")
