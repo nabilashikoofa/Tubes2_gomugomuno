@@ -2,30 +2,47 @@ package bfs
 
 import (
 	"fmt"
-	// "time"
+	"time"
 	"strings"
 	// "Tubes2_gomugomuno/Scrape"
 	"github.com/gocolly/colly"
 )
 
+func printStrings(slice []string) {
+	for _, s := range slice {
+		fmt.Println(s)
+	}
+}
 // ini temporary ak pindahin soalnya mau eksperimen
+// and frickn golang wont let me use the package scraper here
 func scraper(title string) []string {
+	start := time.Now()
 	c := colly.NewCollector()
 
 	var links []string
-	var res []*Node
+	// var res []*Node
 	c.OnHTML("div.mw-page-container a[href^='/wiki/']", func(h *colly.HTMLElement) {
 		link := h.Request.AbsoluteURL(h.Attr("href"))
 		link = strings.TrimPrefix(link, "https://en.wikipedia.org/wiki/")
 
-		if !contains(links, link) {
-			links = append(links, link)
-			res = append(res,createNode(link,nil))
-		}
+		if !strings.ContainsAny(link, ":()/%") {
+            if !contains(links, link) && link != title {
+                links = append(links, link)
+                // res = append(res, createNode(link, nil))
+            }
+        }
 	})
 
 	c.Visit("https://en.wikipedia.org/wiki/" + title)
+	fmt.Print("--------------------------The amount of links visited: ")
+	fmt.Println(len(links))
 
+	// // printAllQueue(res)
+	// printStrings((links))
+	// fmt.Println()
+	elapsed := time.Since(start).Milliseconds()
+	fmt.Println("Its time to stop")
+	fmt.Println(elapsed)
 	return links
 }
 
@@ -46,60 +63,82 @@ func contains(s []string, str string) bool {
 }
 
 
-func BFS(startTitle string, endNode string) {
-// func BFS(startTitle string, endNode string) ([][]string, int64, int, int){
-	// start := time.Now()
+// func BFS(startTitle string, endNode string) {
+func BFS(startTitle string, endNode string) ([][]string, int64, int, int){
+	start := time.Now()
 	firstNode := createNode(startTitle,nil)	// node pertama
-	// shortestlength:= 0
-	// numofcheckednodes := 0
+	shortestlength:= 0
+	numofcheckednodes := 0
 	var queue []*Node		// simpul hidup
-	// var result [][]string		// list of answers
-	// var visitedNodes []*Node // list of visitedNodes, including the ones that had been dequeued 
+	var result [][]string		// list of answers
+	var visitedNodes []*Node // list of visitedNodes, including the ones that had been dequeued 
 	queue = append(queue, firstNode)	// masukkan node pertama ke dalam queue simpul hidup
 	temptitle := scraper(startTitle)
 	for _,title := range temptitle{
 		var tempparent []string = append(firstNode.Parents, startTitle) 
 		queue = append(queue, createNode(title,tempparent))
 	}
-	fmt.Println("Queue initial:")
-	printAllQueue(queue)
+
+	// // Testing first scrape on initial web
+	// fmt.Println("Queue initial:")
+	// printAllQueue(queue)
 
 
 	
-	// // parse for startNode and enqueue
-	// for len(queue) > 0 {		//while queue is not empty
-	// 	numofcheckednodes++
-	// 	visitedNodes = append(visitedNodes, queue[0])	// mark as visited
-	// 	currentNode := queue[0] //current branch is the start of the queue, dequeue
-	// 	queue = queue[1:]
-	// 	// currentNode.Parents = append(currentNode.Parents,currentNode.Title)
-
-	// 	// grab only the shortest solution or when we heave no solution at all.
-	// 	if (currentNode.Title == endNode){
-	// 		fmt.Println("Destination Reached!")
-	// 		if (len(currentNode.Parents)==0){	//assign when first time encountering solution
-	// 			shortestlength = len(currentNode.Parents)
-	// 		} else if (len(currentNode.Parents)==shortestlength){
-	// 			currentNode.Parents = append(currentNode.Parents, currentNode.Title)		// also add the endNode to the list of results, so if we have Basf with B as endNode, we get {a,s,f,b}
-	// 			result = append(result, currentNode.Parents)
-	// 		}
-	// 	} else{
-	// 		// parse and enqueue/create node
-	// 		// dont forget to change the newly made Node Parents with the copy of currentNode.Parents + currentNode.Title
-	// 		var temptitle []string = scrape(currentNode.Title)	// get a list of Node titles from parsing currentNode
-	// 		var tempparent []string = currentNode.Parents		// get the list of parent Node from the currentNode
-	// 		tempparent = append(tempparent, currentNode.Title)	// add the currentNode into the list of parent Node
-	// 		for i := 0; i < len(temptitle); i++ {							// append the newly made node into the queue
-	// 			A := createNode(temptitle[i],tempparent)
-	// 			if (!isVisited(A,visitedNodes)){
-	// 				queue = append(queue, A)
-	// 				visitedNodes = append(visitedNodes, A)		// mark newlymade Nodes as visited
-	// 			}
-	// 		}
-	// 	}
-	// }
-	// elapsed := time.Since(start).Milliseconds()
-	// fmt.Println("Algorithm execution time:", elapsed, "ms")
-	// return result,elapsed,shortestlength,numofcheckednodes
-	// // should i return array instead...?
+	// parse for startNode and enqueue
+	var hasFound bool = false
+	for len(queue) > 0 {		//while queue is not empty
+		fmt.Print("Panjang queue skrg:")
+		fmt.Println(len(queue))
+		numofcheckednodes++
+		visitedNodes = append(visitedNodes, queue[0])	// mark as visited
+		currentNode := queue[0] //current branch is the start of the queue, dequeue
+		fmt.Print(">>>>>>>>>>>>>> Skrg kita cek Node:")
+		currentNode.Print()
+		fmt.Println()
+		queue = queue[1:]
+		// currentNode.Parents = append(currentNode.Parents,currentNode.Title)
+		if (len(currentNode.Parents)>shortestlength) && hasFound{
+			fmt.Println("ALREADY GOT BETTER ANS STAHP⛔⛔⛔")
+			break
+		}
+		// grab only the shortest solution or when we have no solution at all.
+		if (currentNode.Title == endNode){
+			fmt.Println("Destination Reached!")
+			fmt.Println("😱😱😱😱😱😱😱😱")
+			if (shortestlength==0){	//assign when first time encountering solution
+				shortestlength = len(currentNode.Parents)
+			} 
+			if (len(currentNode.Parents)==shortestlength){
+				currentNode.Parents = append(currentNode.Parents, currentNode.Title)		// also add the endNode to the list of results, so if we have Basf with B as endNode, we get {a,s,f,b}
+				result = append(result, currentNode.Parents)
+				hasFound = true
+				fmt.Println("GOT BREAK🔨🔨")
+				break
+			}
+		} else{
+			// parse and enqueue/create node
+			// dont forget to change the newly made Node Parents with the copy of currentNode.Parents + currentNode.Title
+			var temptitle []string = scraper(currentNode.Title)	// get a list of Node titles from parsing currentNode
+			var tempparent []string = currentNode.Parents		// get the list of parent Node from the currentNode
+			tempparent = append(tempparent, currentNode.Title)	// add the currentNode into the list of parent Node
+			for i := 0; i < len(temptitle); i++ {							// append the newly made node into the queue
+				A := createNode(temptitle[i],tempparent)
+				// fmt.Println("TESSSSSSSSSSSSs")
+				// printAllQueue(visitedNodes)
+				// fmt.Println("")
+				// fmt.Println("Node A")
+				// A.Print()
+				if (!isVisited(A,visitedNodes)){
+					queue = append(queue, A)
+					visitedNodes = append(visitedNodes, A)		// mark newlymade Nodes as visited
+				}
+			}
+		}
+	}
+	elapsed := time.Since(start).Milliseconds()
+	fmt.Println("Its time to stop")
+	fmt.Println(elapsed)
+	return result,elapsed,shortestlength,numofcheckednodes
+// 	// should i return array instead...?
 }

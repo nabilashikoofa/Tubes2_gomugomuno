@@ -27,14 +27,16 @@ func scraper(title string) []string {
 	c := colly.NewCollector()
 
 	var links []string
-
+	title = convert(title)
 	c.OnHTML("div.mw-page-container a[href^='/wiki/']", func(h *colly.HTMLElement) {
 		link := h.Request.AbsoluteURL(h.Attr("href"))
 		link = strings.TrimPrefix(link, "https://en.wikipedia.org/wiki/")
 
-		if !contains(links, link) {
-			links = append(links, link)
-		}
+		if !strings.ContainsAny(link, ":()/%") {
+            if !contains(links, link) && link != title {
+                links = append(links, link)
+            }
+        }
 	})
 
 	c.Visit("https://en.wikipedia.org/wiki/" + title)
