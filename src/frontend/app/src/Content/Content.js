@@ -16,15 +16,26 @@ export default function Content(){
         setEndNode(event.target.value);
     };
 
+
     const handleBFS = () => {
         // Send startNode and endNode values to the server
         console.log("Start Node:", startNode);
         console.log("End Node:", endNode);
+        if (!startNode.trim() || !endNode.trim()) {
+            alert('Start and end nodes cannot be empty');
+            return;
+        }
+        if (startNode===endNode) {
+            alert('Start and end nodes cannot be the same');
+            return;
+        }
     
         fetch(`http://localhost:3000/api/bfs?startNode=${startNode}&endNode=${endNode}`)
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    // throw new Error('Network response was not ok');
+                    alert('Link does not exist');
+                    return
                 }
                 return response.json();
             })
