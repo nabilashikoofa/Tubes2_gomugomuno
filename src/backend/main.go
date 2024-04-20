@@ -1,7 +1,7 @@
 package main
 
 import (
-	// "encoding/json"
+	"encoding/json"
 	"Tubes2_gomugomuno/BFS"
 	"Tubes2_gomugomuno/Scrape"
 	"fmt"
@@ -49,55 +49,58 @@ func printResult(result [][]string) {
 	}
 }
 
+type AlgorithmFunc func(startNode, endNode string) ([][]string, int64, int, int)
+
+func executeAlgorithm(w http.ResponseWriter, r *http.Request, algorithm AlgorithmFunc) {
+	startNode := r.URL.Query().Get("startNode")
+	endNode := r.URL.Query().Get("endNode")
+
+	if startNode == "" || endNode == "" {
+
+		http.Error(w, "Missing start or end node", http.StatusBadRequest)
+		return
+	}
+
+    if startNode == endNode{
+        http.Error(w, "Start and end node cannot be the same.", http.StatusBadRequest)
+		return
+    }
+
+	if !isValidLink(startNode) {
+		http.Error(w, "Invalid start node", http.StatusNotFound)
+		return
+	}
+
+	if !isValidLink(endNode) {
+		http.Error(w, "Invalid end node", http.StatusNotFound)
+		return
+	}
+
+	result, elapsed, shortestlength, numofcheckednodes := algorithm(startNode, endNode)
+    response := struct {
+        Result  [][]string `json:"result"`
+        Elapsed int64      `json:"elapsed"`
+        Shortest int      `json:"shortestlength"`
+        Checked int      `json:"numofcheckednodes"`
+    }{result, elapsed, shortestlength, numofcheckednodes}
+
+	json.NewEncoder(w).Encode(response)
+}
 
 // ini cm prototype
 func main() {
-    var result [][]string
-    var elapsed int64
-    var shortestlength int
-    var numofcheckednodes int
-    fmt.Println("Starting Main...")
-    // bfs.BFS("Vector","Vector_space")
-	result,elapsed,shortestlength,numofcheckednodes = bfs.BFS("Vector","Algebra") //45613 - 38262 (2 degrees)
-    fmt.Println("Algorithm execution time:", elapsed, "ms")
-    printResult(result)
-    fmt.Println("")
-    fmt.Println("Shortest length: ",shortestlength)
-    fmt.Println("Nodes checked:",numofcheckednodes)
+    http.HandleFunc("/api/bfs", func(w http.ResponseWriter, r *http.Request) {
+        fmt.Println("Enter BFS")
+        w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
+        w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+        executeAlgorithm(w, r, bfs.BFS)
 
+    // http.HandleFunc("/api/ids", func(w http.ResponseWriter, r *http.Request) {
+    //     executeAlgorithm(w, r, ids.IDS)   
 
-    // http.HandleFunc("/wikirace", func(w http.ResponseWriter, r *http.Request) {
-    //     startTitle := r.URL.Query().Get("start")
-    //     endTitle := r.URL.Query().Get("end")
-    //     var validend bool
-    //     var validstart bool
-    //     validend = isValidLink(endTitle)
-    //     validstart = isValidLink(startTitle)
-    //     if startTitle == "" || endTitle == "" {
-    //         http.Error(w, "Missing start or end title", http.StatusBadRequest)
-    //         return
-    //     }
-    //     if !validend{
-    //         http.Error(w, "End link did not exist", http.StatusNotFound)
-    //         return
-    //     }
-    //     if !validstart{
-    //         http.Error(w, "Start link did not exist", http.StatusNotFound)
-    //         return
-    //     }
-    //     result, elapsed, shortestlength, numofcheckednodes := bfs.BFS(startTitle, endTitle)
+    })
 
-    //     response := struct {
-    //         Result  [][]string `json:"result"`
-    //         Elapsed int64      `json:"elapsed"`
-    //         Shortest int      `json:"shortestlength"`
-    //         Checked int      `json:"numofcheckednodes"`
-    //     }{result, elapsed, shortestlength, numofcheckednodes}
-
-    //     w.Header().Set("Content-Type", "application/json")
-    //     json.NewEncoder(w).Encode(response)
-    // })
-
-    // fmt.Println("Server is running on :8080")
-    // http.ListenAndServe(":8080", nil)
+    fmt.Println("Server is running on :3000")
+    http.ListenAndServe(":3000", nil)
 }

@@ -72,6 +72,7 @@ func BFS(startTitle string, endNode string) ([][]string, int64, int, int){
 	var result [][]string		// list of answers
 	// var visitedNodes []*Node // list of visitedNodes, including the ones that had been dequeued 
 	visited := make(map[string]string)
+	secondtolast := make(map[string]bool) 
 	queue = append(queue, firstNode)	// masukkan node pertama ke dalam queue simpul hidup
 	visited[firstNode.Title] = ""
 	temptitle := scraper(startTitle)
@@ -99,9 +100,12 @@ func BFS(startTitle string, endNode string) ([][]string, int64, int, int){
 		fmt.Println()
 		queue = queue[1:]
 		// currentNode.Parents = append(currentNode.Parents,currentNode.Title)
+		if _, ok := secondtolast[currentNode.Title]; ok {
+			continue
+		}
 		if (len(currentNode.Parents)>shortestlength) && hasFound{
 			fmt.Println("ALREADY GOT BETTER ANS STAHP⛔⛔⛔")
-			break
+			continue
 		}
 		// grab only the shortest solution or when we have no solution at all.
 		if (currentNode.Title == endNode){
@@ -113,24 +117,22 @@ func BFS(startTitle string, endNode string) ([][]string, int64, int, int){
 			if (len(currentNode.Parents)==shortestlength){
 				currentNode.Parents = append(currentNode.Parents, currentNode.Title)		// also add the endNode to the list of results, so if we have Basf with B as endNode, we get {a,s,f,b}
 				result = append(result, currentNode.Parents)
+				secondtolast[currentNode.Parents[len(currentNode.Parents)-2]] = true
 				hasFound = true
-				// ini testing 1 solusi dulu ya:")"
+				fmt.Println("SOLUSI LAINNN???!!🔍🔍🔍🔍🔍🔍🔍🔍🔍🔍🔍🔍🔍🔍🔍")
+				// // ini testing 1 solusi dulu ya:")"
 				fmt.Println("GOT BREAK🔨🔨")
 				break
 			}
 		} else{
 			// parse and enqueue/create node
 			// dont forget to change the newly made Node Parents with the copy of currentNode.Parents + currentNode.Title
+			fmt.Println("WAITING FOR SCRAPER🫧🫧🫧🫧🫧🫧")
 			var temptitle []string = scraper(currentNode.Title)	// get a list of Node titles from parsing currentNode
 			var tempparent []string = currentNode.Parents		// get the list of parent Node from the currentNode
 			tempparent = append(tempparent, currentNode.Title)	// add the currentNode into the list of parent Node
 			for i := 0; i < len(temptitle); i++ {							// append the newly made node into the queue
 				A := createNode(temptitle[i],tempparent)
-				// fmt.Println("TESSSSSSSSSSSSs")
-				// printAllQueue(visitedNodes)
-				// fmt.Println("")
-				// fmt.Println("Node A")
-				// A.Print()
 				
 				// if (!isVisited(A,visitedNodes)){
 				// 	queue = append(queue, A)
@@ -148,8 +150,8 @@ func BFS(startTitle string, endNode string) ([][]string, int64, int, int){
 		}
 	}
 	elapsed := time.Since(start).Milliseconds()
-	fmt.Println("Its time to stop")
-	fmt.Println(elapsed)
+	// fmt.Println("Its time to stop")
+	// fmt.Println(elapsed)
 	return result,elapsed,shortestlength,numofcheckednodes
 // 	// should i return array instead...?
 }
