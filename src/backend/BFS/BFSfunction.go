@@ -2,6 +2,7 @@ package bfs
 import (
 	"fmt"
 	"strings"
+	// "time"
 )
 
 
@@ -51,6 +52,9 @@ func printAllQueue(queue []*Node){
 			fmt.Println(queue[i].Parents[j])
 		}
 		fmt.Println()
+		if (queue[i].Title=="Knowledge"){
+			fmt.Scanln()
+		}
 	}
 }
 
