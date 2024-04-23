@@ -6,14 +6,11 @@
 // 	"Tubes2_gomugomuno/Scrape"
 // 	"fmt"
 // 	"net/http"
+// 	"time"
 // 	// "Tubes2_gomugomuno/IDS"
 // )
 
-// // TAMBAHAN EROR HANDLING, HANDLING GAADA WIKIPEDIA DENGAN KATA XX MISALNYA KRN TYPO
-// // HRS CEK KALAU NODEAWAL = NODEAKHIR EXCEPTION
 
-// // INI BLM AKU CHECK YA
-// // VALIDASI LINK INPUTAN
 // func isValidLink(title string) bool {
 //     title = Scrape.Convert(title)
 // 	url := fmt.Sprintf("https://en.wikipedia.org/wiki/%s", title)
@@ -57,15 +54,20 @@
 //     var shortestlength int
 //     var numofcheckednodes int
 //     fmt.Println("Starting Main...")
+//     timee := time.Now()
 //     // bfs.BFS("Vector","Vector_space")
-// 	result,elapsed,shortestlength,numofcheckednodes = bfs.BFS("Vector","Chupacabras") //45613 - 38262 (2 degrees)
-//     fmt.Println("Algorithm execution time:", elapsed, "ms")
+
+// 	// result,elapsed, shortestlength,numofcheckednodes = bfs.BFS("Fanta_cake","Flour") //45613 - 38262 (2 degrees)
+
+// 	result, elapsed, shortestlength, numofcheckednodes = bfs.ParallelBFS("Fanta_cake","Flour") //45613 - 38262 (2 degrees)
+    
+// 	fmt.Println("Algorithm execution time:", elapsed, "ms")
 //     printResult(result)
 //     fmt.Println("")
 //     fmt.Println("Shortest length: ",shortestlength)
 //     fmt.Println("Nodes checked:",numofcheckednodes)
-
-
+//     elapsedd := time.Since(timee).Milliseconds()
+//     fmt.Println("ELAPSED REAL: ",elapsedd)
 //     // http.HandleFunc("/wikirace", func(w http.ResponseWriter, r *http.Request) {
 //     //     startTitle := r.URL.Query().Get("start")
 //     //     endTitle := r.URL.Query().Get("end")
