@@ -43,6 +43,7 @@ func isVisited(A *Node, queue []*Node) (bool){
 }
 
 func printAllQueue(queue []*Node){
+	fmt.Println("👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽")
 	fmt.Println("Simpul hidup:")
 	for  i := 0; i < len(queue); i++ {
 		fmt.Println("Title:", queue[i].Title)
@@ -52,9 +53,9 @@ func printAllQueue(queue []*Node){
 			fmt.Println(queue[i].Parents[j])
 		}
 		fmt.Println()
-		if (queue[i].Title=="Knowledge"){
-			fmt.Scanln()
-		}
+		// if (queue[i].Title=="Knowledge"){
+		// 	fmt.Scanln()
+		// }
 	}
 }
 
