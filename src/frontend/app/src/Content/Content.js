@@ -1,6 +1,6 @@
 import React, { useState } from "react"
-import axios from 'axios'
 import './Content.css'
+import GraphComponent from '../GraphComponent/GraphComponent'; 
 
 
 export default function Content(){
@@ -43,9 +43,11 @@ export default function Content(){
                 console.log("SUCCEED");
                 console.log(data); // Log the result received from the server
                 // Update the UI with the result if needed
+                setResult(data.result);
             })
             .catch(error => {
                 console.error('Error:', error);
+                alert('Error fetching data');
             });
     };
     const handleIDS = () => {
@@ -86,12 +88,17 @@ export default function Content(){
                 </div>
             </div>
         </div>
-        {/* {result && ( */}
-        {/* nnt di pisah aja */}
-        {/* <div className="result">
-            <h3>Result</h3>
-            <p>{result}</p>
+        <div className="result">
+            {result && (
+                <div>
+                    <p>Hasil:</p>
+                    <pre>{JSON.stringify(result, null, 2)}</pre>
+                    <GraphComponent result={result} />
+                </div>
+            )}
+
+            {/* {result && <GraphComponent result={result} />} */}
+            {/* {<GraphComponent result={[['A', 'B', 'C'],['A', 'B', 'Z']]} />} */}
         </div>
-        )} */}
     </div> 
 }
