@@ -30,7 +30,7 @@ func main() {
 	// fmt.Println(d)
 	// elapsed := time.Since(start).Milliseconds()
 	// fmt.Println("Algorithm execution time:", elapsed, "ms")
-	IDS("vector", "vectorman")
+	IDS("vector", "Chupacabras")
 }
 
 type Tree struct {
@@ -119,9 +119,11 @@ func Scraper(title string) []string {
 		link := h.Request.AbsoluteURL(h.Attr("href"))
 		link = strings.TrimPrefix(link, "https://en.wikipedia.org/wiki/")
 
-		if !Contains(links, link) {
-			links = append(links, link)
-		}
+		if !strings.ContainsAny(link, ":()/%") {
+            if !Contains(links, link) && link != Convert(title) {
+                links = append(links, link)
+            }
+        }
 	})
 
 	c.Visit("https://en.wikipedia.org/wiki/" + title)

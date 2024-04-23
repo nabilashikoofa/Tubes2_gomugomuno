@@ -33,7 +33,7 @@ func Scraper(title string) []string {
 		link = strings.TrimPrefix(link, "https://en.wikipedia.org/wiki/")
 
 		if !strings.ContainsAny(link, ":()/%") {
-            if !Contains(links, link) && link != title {
+            if !Contains(links, link) && link != Convert(title) {
                 links = append(links, link)
             }
         }
