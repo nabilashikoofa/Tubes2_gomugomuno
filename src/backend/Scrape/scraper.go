@@ -26,22 +26,24 @@ import (
 func Scraper(title string) []string {
 	c := colly.NewCollector()
 
-	var links []string
-	title = Convert(title)
-	c.OnHTML("div.mw-page-container a[href^='/wiki/']", func(h *colly.HTMLElement) {
-		link := h.Request.AbsoluteURL(h.Attr("href"))
-		link = strings.TrimPrefix(link, "https://en.wikipedia.org/wiki/")
+    linksMap := make(map[string]bool) // Map to store links
 
-		if !strings.ContainsAny(link, ":()/%") {
-            if !Contains(links, link) && link != Convert(title) {
-                links = append(links, link)
-            }
+    title = Convert(title)
+    c.OnHTML("div.mw-page-container a[href^='/wiki/']", func(h *colly.HTMLElement) {
+        link := h.Request.AbsoluteURL(h.Attr("href"))
+        link = strings.TrimPrefix(link, "https://en.wikipedia.org/wiki/")
+
+        if !strings.ContainsAny(link, ":/%") && link != Convert(title) {
+            linksMap[link] = true // Store link in map
         }
-	})
+    })
 
-	c.Visit("https://en.wikipedia.org/wiki/" + title)
-
-	return links
+    c.Visit("https://en.wikipedia.org/wiki/" + title)
+    var result []string
+    for link := range linksMap {
+        result = append(result, link)
+    }
+    return result
 }
 
 // Input without underscore

@@ -2,12 +2,9 @@ package bfs
 
 import (
 	"fmt"
-	"strings"
 	"sync"
 	"time"
-
-	// "Tubes2_gomugomuno/Scrape"
-	"github.com/gocolly/colly"
+	"Tubes2_gomugomuno/Scrape"
 )
 
 func printStrings(slice []string) {
@@ -15,53 +12,7 @@ func printStrings(slice []string) {
 		fmt.Println(s)
 	}
 }
-// ini temporary ak pindahin soalnya mau eksperimen
-func scraper(title string) []string {
-	// start := time.Now()
-	c := colly.NewCollector()
 
-	var links []string
-	// var res []*Node
-	c.OnHTML("div.mw-page-container a[href^='/wiki/']", func(h *colly.HTMLElement) {
-		link := h.Request.AbsoluteURL(h.Attr("href"))
-		link = strings.TrimPrefix(link, "https://en.wikipedia.org/wiki/")
-
-		if !strings.ContainsAny(link, ":()/%") {
-            if !contains(links, link) && link != title {
-                links = append(links, link)
-                // res = append(res, createNode(link, nil))
-            }
-        }
-	})
-
-	c.Visit("https://en.wikipedia.org/wiki/" + title)
-	fmt.Print("--------------------------The amount of links visited: ")
-	fmt.Println(len(links))
-
-	// // printAllQueue(res)
-	// printStrings((links))
-	// fmt.Println()
-	// elapsed := time.Since(start).Milliseconds()
-	// fmt.Println("Its time to stop")
-	// fmt.Println(elapsed)
-	return links
-}
-
-// Input without underscore
-// Output with underscore 
-func convert(input string) string {
-	converted := strings.ReplaceAll(input, " ", "_")
-	return converted
-}
-
-func contains(s []string, str string) bool {
-	for _, v := range s {
-		if v == str {
-			return true
-		}
-	}
-	return false
-}
 
 
 // func BFS(startTitle string, endNode string) {
@@ -72,24 +23,17 @@ func BFS(startTitle string, endNode string) ([][]string, int64, int, int){
 	numofcheckednodes := 0
 	var queue []*Node		// simpul hidup
 	var result [][]string		// list of answers
-	// var visitedNodes []*Node // list of visitedNodes, including the ones that had been dequeued 
 	visited := make(map[string]string)
 	secondtolast := make(map[string]bool) 
 	//second to last map is for efficiency of not checking the second to last parent nodes that have found in a solution
 	//for example i went from Vector to Mathematics and i got it in the order (Vector,Euclidean_vector,Mathematics). now all the nodes i've created in the queue that has the parent euclidean vector init does not need to be checked, since we already confirm that the endnode is reachable, thus cutting the time making it more faster.  
 	queue = append(queue, firstNode)	// masukkan node pertama ke dalam queue simpul hidup
 	visited[firstNode.Title] = ""
-	temptitle := scraper(startTitle)
+	temptitle := Scrape.Scraper(startTitle)
 	for _,title := range temptitle{
 		var tempparent []string = append(firstNode.Parents, startTitle) 
 		queue = append(queue, createNode(title,tempparent))
 	}
-
-	// // Testing first scrape on initial web
-	// fmt.Println("Queue initial:")
-	// printAllQueue(queue)
-
-
 	
 	// parse for startNode and enqueue
 	var hasFound bool = false
@@ -98,7 +42,6 @@ func BFS(startTitle string, endNode string) ([][]string, int64, int, int){
 		fmt.Print("Panjang queue skrg:")
 		fmt.Println(len(queue))
 		numofcheckednodes++
-		// visitedNodes = append(visitedNodes, queue[0])	// mark as visited
 		currentNode := queue[0] //current branch is the start of the queue, dequeue
 		fmt.Println(">>>>>>>>>>>>>> Skrg kita cek Node: ")
 		currentNode.Print()
@@ -133,7 +76,7 @@ func BFS(startTitle string, endNode string) ([][]string, int64, int, int){
 			// parse and enqueue/create node
 			// dont forget to change the newly made Node Parents with the copy of currentNode.Parents + currentNode.Title
 			fmt.Println("WAITING FOR SCRAPER🫧🫧🫧🫧🫧🫧")
-			var temptitle []string = scraper(currentNode.Title)	// get a list of Node titles from parsing currentNode
+			var temptitle []string = Scrape.Scraper(currentNode.Title)	// get a list of Node titles from parsing currentNode
 			var tempparent []string = currentNode.Parents		// get the list of parent Node from the currentNode
 			tempparent = append(tempparent, currentNode.Title)	// add the currentNode into the list of parent Node
 			for i := 0; i < len(temptitle); i++ {
@@ -157,10 +100,7 @@ func BFS(startTitle string, endNode string) ([][]string, int64, int, int){
 		}
 	}
 	elapsed := time.Since(start).Milliseconds()
-	// fmt.Println("Its time to stop")
-	// fmt.Println(elapsed)
 	return result,elapsed,shortestlength,numofcheckednodes
-// 	// should i return array instead...?
 }
 
 
@@ -168,7 +108,7 @@ func BFS(startTitle string, endNode string) ([][]string, int64, int, int){
 func initialBFS(startTitle string) ([]*Node){
 	firstNode := createNode(startTitle,nil)	// node pertama
 	var queue []*Node		// simpul hidup
-	temptitle := scraper(startTitle)
+	temptitle := Scrape.Scraper(startTitle)
 	for _,title := range temptitle{
 		var tempparent []string = append(firstNode.Parents, startTitle) 
 		queue = append(queue, createNode(title,tempparent))
@@ -235,17 +175,15 @@ func multiBFS(queue []*Node, endNode string, shortestlengthavailable *int, resul
 				*numofcheckednodesavail = numofcheckednodes
 				fmt.Println("GOT BREAK🔨🔨")
 				fmt.Println(elapsedavail)
-				break
+				// break
 			}
 		} else{
 			var temptitle []string
 			var tempparent []string
-			// parse and enqueue/create node
-			// dont forget to change the newly made Node Parents with the copy of currentNode.Parents + currentNode.Title
 			fmt.Println(*shortestlengthavailable)
 			if (!foundOneSol){
 				fmt.Println("WAITING FOR SCRAPER🫧🫧🫧🫧🫧🫧")
-				temptitle = scraper(currentNode.Title)	// get a list of Node titles from parsing currentNode
+				temptitle = Scrape.Scraper(currentNode.Title)	// get a list of Node titles from parsing currentNode
 				tempparent = currentNode.Parents		// get the list of parent Node from the currentNode
 				tempparent = append(tempparent, currentNode.Title)	// add the currentNode into the list of parent Node
 

@@ -2,7 +2,6 @@ package bfs
 import (
 	"fmt"
 	"strings"
-	// "time"
 )
 
 
@@ -12,12 +11,6 @@ type Node struct {
 }
 
 // create empty Node
-func createEmptyNode(startTitle string) *Node{
-	return &Node{
-		Title: startTitle,
-		Parents: nil,
-	}
-}
 
 // Node constructor, user defined
 func createNode(startTitle string, NodeParent []string) *Node{
@@ -43,7 +36,6 @@ func isVisited(A *Node, queue []*Node) (bool){
 }
 
 func printAllQueue(queue []*Node){
-	fmt.Println("👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽")
 	fmt.Println("Simpul hidup:")
 	for  i := 0; i < len(queue); i++ {
 		fmt.Println("Title:", queue[i].Title)
