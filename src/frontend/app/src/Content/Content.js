@@ -50,6 +50,7 @@ export default function Content(){
                 alert('Error fetching data');
             });
     };
+
     const handleIDS = () => {
         if (startNode==="" || endNode===""){
             alert('Cannot be empty string')
@@ -57,8 +58,28 @@ export default function Content(){
         // Send startNode and endNode values to the server
         console.log("Start Node:", startNode);
         console.log("End Node:", endNode);
-        // Send these values to the server using fetch or any other method
+
+        // fetch(`http://localhost:3000/api/ids?startNode=${startNode}&endNode=${endNode}`)
+        // .then(response => {
+        //     if (!response.ok) {
+        //         // throw new Error('Network response was not ok');
+        //         alert('Link does not exist');
+        //         return
+        //     }
+        //     return response.json();
+        // })
+        // .then(data => {
+        //     console.log("SUCCEED");
+        //     console.log(data); // Log the result received from the server
+        //     // Update the UI with the result if needed
+        //     setResult(data.result);
+        // })
+        // .catch(error => {
+        //     console.error('Error:', error);
+        //     alert('Error fetching data');
+        // });
     };
+
     return  <div className="maincontent">
         <div className='content' id="content">
             <h3>Enter the nodes</h3>
@@ -89,16 +110,17 @@ export default function Content(){
             </div>
         </div>
         <div className="result">
-            {result && (
+            {/* {result && (
                 <div>
                     <p>Hasil:</p>
                     <pre>{JSON.stringify(result, null, 2)}</pre>
                     <GraphComponent result={result} />
                 </div>
-            )}
-
-            {/* {result && <GraphComponent result={result} />} */}
+            )} */}
+            {result && <GraphComponent result={result} />}
             {/* {<GraphComponent result={[['A', 'B', 'C'],['A', 'B', 'Z']]} />} */}
+            {<GraphComponent result={[['A', 'C', 'Z'],['A', 'N', 'Z'],['A', 'O', 'Z']]} />}
+
         </div>
     </div> 
 }

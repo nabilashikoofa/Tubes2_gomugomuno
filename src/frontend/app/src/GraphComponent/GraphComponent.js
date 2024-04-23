@@ -1,4 +1,5 @@
 import React from "react";
+import './GraphComponent.css'
 import { Graph } from "react-d3-graph";
 
 class GraphComponent extends React.Component {
@@ -38,7 +39,7 @@ class GraphComponent extends React.Component {
             directed: true,
             node: {
                 color: "lightblue",
-                size: 120,
+                size: 500,
                 highlightStrokeColor: "blue",
             },
             link: {
@@ -47,7 +48,7 @@ class GraphComponent extends React.Component {
         };
 
         return (
-            <div>
+            <div className="graph">
                 <h1>Graph</h1>
                 <Graph
                     id="graph-id" // id wajib

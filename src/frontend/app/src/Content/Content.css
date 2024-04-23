@@ -1,6 +1,6 @@
 .maincontent{
     display: flex;
-    flex-direction: column;    
+    flex-direction: column;  
 }
 
 .content{
@@ -55,6 +55,7 @@
     padding-right: 10px;
     justify-content: space-evenly;
 }
+
 .content button{
     font-family: "Poppins";
     background-color: rgb(161, 194, 255);
@@ -67,4 +68,15 @@
     margin: 0.7rem auto;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     width: 20vh;
+}
+
+.content button:hover {
+    background-color: rgb(131, 164, 230);
+}
+  
+.content button:focus {
+    background-color: rgb(131, 164, 230);
+  }
+.result {
+    margin: 20px;
 }
