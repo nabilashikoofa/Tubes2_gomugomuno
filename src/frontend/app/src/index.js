@@ -5,6 +5,7 @@ import App from './App';
 import Header from './Header/Header';
 import Content from './Content/Content';
 import About from './About/About';
+import Footer from './Footer/Footer';
 import HTU from './How to Use/HTU'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -19,6 +20,7 @@ root.render(
     {/* <div className='tes'></div> */}
     <br></br>
     <About/>
+    <Footer/>
     </>
 );
 

@@ -71,11 +71,11 @@
 }
 
 .content button:hover {
-    background-color: rgb(131, 164, 230);
+    background-color: cornflowerblue;
 }
   
 .content button:focus {
-    background-color: rgb(131, 164, 230);
+    background-color: cornflowerblue;
 }
 
 .result {
@@ -96,7 +96,6 @@
     font-family: "Poppins", sans-serif; 
     font-size: large; 
     color: #fff; 
-    margin-bottom: 10px; 
     text-align: center;
 }
   

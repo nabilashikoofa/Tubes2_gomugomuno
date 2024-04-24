@@ -75,12 +75,14 @@ func executeAlgorithm(w http.ResponseWriter, r *http.Request, algorithm Algorith
 		http.Error(w, "Invalid end node", http.StatusNotFound)
 		return
 	}
+
 	result, elapsed, shortestlength, numofcheckednodes := algorithm(startNode, endNode)
+
     response := struct {
-        Result  [][]string `json:"result"`
-        Elapsed int64      `json:"elapsed"`
-        Shortest int      `json:"shortestlength"`
-        Checked int      `json:"numofcheckednodes"`
+        Result  	[][]string `json:"result"`
+        Elapsed 	int64      `json:"elapsed"`
+        Shortest 	int        `json:"shortestlength"`
+        Checked 	int        `json:"numofcheckednodes"`
     }{result, elapsed, shortestlength, numofcheckednodes}
 
 	json.NewEncoder(w).Encode(response)

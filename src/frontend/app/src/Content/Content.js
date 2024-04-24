@@ -7,6 +7,9 @@ export default function Content(){
     const [startNode, setStartNode] = useState();
     const [endNode, setEndNode] = useState();
     const [result, setResult] = useState();
+    const [elapsed, setElapsed] = useState();
+    const [shortestlength, setShortest] = useState();
+    const [numofcheckednodes, setChecked] = useState();
 
     const handleStartInputChange = (event) => {
         setStartNode(event.target.value);
@@ -16,21 +19,21 @@ export default function Content(){
         setEndNode(event.target.value);
     };
 
-
-    const handleBFS = () => {
+    const handleRace = (algorithm) => {
         // Send startNode and endNode values to the server
         console.log("Start Node:", startNode);
         console.log("End Node:", endNode);
+
         if (!startNode.trim() || !endNode.trim()) {
             alert('Start and end nodes cannot be empty');
             return;
         }
-        if (startNode===endNode) {
+        if (startNode === endNode) {
             alert('Start and end nodes cannot be the same');
             return;
         }
     
-        fetch(`http://localhost:3000/api/bfs?startNode=${startNode}&endNode=${endNode}`)
+        fetch(`http://localhost:3000/api/${algorithm}?startNode=${startNode}&endNode=${endNode}`)
             .then(response => {
                 if (!response.ok) {
                     if (response.status === 0) {
@@ -44,46 +47,18 @@ export default function Content(){
             })
             .then(data => {
                 console.log("SUCCEED");
-                console.log(data); // Log the result received from the server
-                // Update the UI with the result if needed
+                console.log(data); 
+
+                // Update the UI with the result 
                 setResult(data.result);
+                setElapsed(data.elapsed / 1000);
+                setShortest(data.shortestlength);
+                setChecked(data.numofcheckednodes);
             })
             .catch(error => {
                 console.error('Error:', error);
                 alert('Error fetching data');
             });
-    };
-
-    const handleIDS = () => {
-        // Send startNode and endNode values to the server
-        console.log("Start Node:", startNode);
-        console.log("End Node:", endNode);
-        if (startNode==="" || endNode===""){
-            alert('Cannot be empty string')
-        }
-
-        fetch(`http://localhost:3000/api/ids?startNode=${startNode}&endNode=${endNode}`)
-        .then(response => {
-            if (!response.ok) {
-                if (response.status === 0) {
-                    alert('Server is not yet started');
-                } else {
-                    alert('Link does not exist');
-                }
-                return;
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log("SUCCEED");
-            console.log(data); // Log the result received from the server
-            // Update the UI with the result if needed
-            setResult(data.result);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error fetching data');
-        });
     };
 
     return  <div className="maincontent">
@@ -110,30 +85,20 @@ export default function Content(){
                         />
                 </div>
                 <div className="subbuttons">
-                    <button onClick={handleBFS}>Use BFS</button>
-                    <button onClick={handleIDS}>Use IDS</button>
+                    <button onClick={() => handleRace('bfs')}>Use BFS</button>
+                    <button onClick={() => handleRace('ids')}>Use IDS</button>
                 </div>
             </div>
         </div>
         <div className="result">
-            {/* <h1>Result</h1> 
-            <p>
-                Wow! We Found XXX with XXX degrees of separation from
-                XXX to XXX in XXX seconds
-                {/* Found {result.totalPaths} with {result.totalDegrees} degrees of separation from{" "}
-                {result.startNode} to {result.endNode} in {result.elapsedTime} seconds!
-            </p>  */}
-            {/* {result && (
+            {result && (
                 <div>
-                    <p>Hasil:</p>
-                    <pre>{JSON.stringify(result, null, 2)}</pre>
+                    <h1>Result</h1>
+                    <p>Wow! We Found {numofcheckednodes} path with {shortestlength} degrees of separation </p> 
+                    <p>from {startNode} to {endNode} in {elapsed} seconds </p>
                     <GraphComponent result={result} />
                 </div>
-            )} */}
-            {result && <GraphComponent result={result} />}
-            {/* {<GraphComponent result={[['A', 'B', 'C'],['A', 'B', 'Z']]} />} */}
-            {<GraphComponent result={[['A', 'C', 'Z'],['A', 'N', 'Z'],['A', 'O', 'Z']]} />}
-
+            )}
         </div>
     </div> 
 }

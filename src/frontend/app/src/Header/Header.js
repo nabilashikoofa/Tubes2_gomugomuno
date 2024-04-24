@@ -12,6 +12,6 @@ export default function Header(){
             <a href="#aboutus">About Us</a>
             <a href="https://github.com/nabilashikoofa/Tubes2_gomugomuno">Github</a>
         </div>
-        <img src={cloud}></img>
+        <img src={cloud} alt="" />
     </div>
 }
