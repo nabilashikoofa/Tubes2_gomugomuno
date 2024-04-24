@@ -35,6 +35,8 @@ class GraphComponent extends React.Component {
 
         // Konfigurasi graf
         const myConfig = {
+            width: (window.innerWidth) * 0.77,
+            height: (window.innerHeight) * 0.55, 
             nodeHighlightBehavior: true,
             directed: true,
             node: {
@@ -49,7 +51,7 @@ class GraphComponent extends React.Component {
 
         return (
             <div className="graph">
-                <h1>Graph</h1>
+                {/* <h1>Graph</h1> */}
                 <Graph
                     id="graph-id" // id wajib
                     data={graphData}

@@ -76,7 +76,27 @@
   
 .content button:focus {
     background-color: rgb(131, 164, 230);
-  }
+}
+
 .result {
     margin: 20px;
 }
+
+.result h1{
+    font-family: "Pixelify Sans";
+    justify-content: center;
+    margin: auto;
+    font-size: xx-large;
+    padding-top: 20px;
+    color: #fff; 
+    text-align: center;
+}
+
+.result p {
+    font-family: "Poppins", sans-serif; 
+    font-size: large; 
+    color: #fff; 
+    margin-bottom: 10px; 
+    text-align: center;
+}
+  
