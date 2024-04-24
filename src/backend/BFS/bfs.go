@@ -105,13 +105,23 @@ func BFS(startTitle string, endNode string) ([][]string, int64, int, int){
 
 
 // return the list of Nodes from startTitle created inside a queue 
-func initialBFS(startTitle string) ([]*Node){
+func initialBFS(startTitle string, endNode string, shortestlengthavailable *int, elapsedavail *int64) ([]*Node){
 	firstNode := createNode(startTitle,nil)	// node pertama
 	var queue []*Node		// simpul hidup
 	temptitle := Scrape.Scraper(startTitle)
-	for _,title := range temptitle{
+	// var numofcheckednodes := 0
+	for i := 0; i<len(temptitle); i++{
+		// numofcheckednodes++
+		// if (temptitle[i]==endNode){
+		// 	queue = []*Node{createNode()}
+		// 	return queue
+		// }
+		if (temptitle[i] == endNode){
+			fmt.Println("🦄🦄🦄🦄🦄🦄🦄🦄🦄🦄🦄🦄🦄🦄🦄🦄🦄")
+
+		}
 		var tempparent []string = append(firstNode.Parents, startTitle) 
-		queue = append(queue, createNode(title,tempparent))
+		queue = append(queue, createNode(temptitle[i],tempparent))
 	}
 	return queue
 }
@@ -129,14 +139,17 @@ func multiBFS(queue []*Node, endNode string, shortestlengthavailable *int, resul
 	//second to last map is for efficiency of not checking the second to last parent nodes that have found in a solution
 	//for example i went from Vector to Mathematics and i got it in the order (Vector,Euclidean_vector,Mathematics). now all the nodes i've created in the queue that has the parent euclidean vector init does not need to be checked, since we already confirm that the endnode is reachable, thus cutting the time making it more faster.  
 	start := time.Now()
+	// fmt.Print("🤌🤌🤌🤌🤌🤌Panjang queue skrg:")
+	// fmt.Println(len(queue))
+	// printAllQueue(queue)
 	for len(queue) > 0 {		//while queue is not empty
-		// fmt.Print("Panjang queue skrg:")
-		// fmt.Println(len(queue))
 		numofcheckednodes++
 		// visitedNodes = append(visitedNodes, queue[0])	// mark as visited
 		currentNode := queue[0] //current branch is the start of the queue, dequeue
 		fmt.Println("🐻‍❄️🐻‍❄️🐻‍❄️🐻‍❄️🐻‍❄️")
 		fmt.Println(len(currentNode.Parents))
+		fmt.Println(*shortestlengthavailable)
+		fmt.Println(*resultavailable)
 		fmt.Println(">>>>>>>>>>>>>> Skrg kita cek Node: ")
 		currentNode.Print()
 		fmt.Println()
@@ -148,6 +161,7 @@ func multiBFS(queue []*Node, endNode string, shortestlengthavailable *int, resul
 			fmt.Println(*shortestlengthavailable)
 			fmt.Println(*resultavailable)
 			fmt.Println("THREAD DIHENTIKANNN⛔⛔⛔⛔⛔⛔⛔")
+			// printAllQueue(queue)
 			return
 		}
 		if _, ok := secondtolast[currentNode.Title]; ok {
@@ -165,7 +179,7 @@ func multiBFS(queue []*Node, endNode string, shortestlengthavailable *int, resul
 			if (shortestlength==0){	//assign when first time encountering solution
 				shortestlength = len(currentNode.Parents)
 			} 
-			if (len(currentNode.Parents)==shortestlength){
+			if (len(currentNode.Parents)<=shortestlength){
 				currentNode.Parents = append(currentNode.Parents, currentNode.Title)		// also add the endNode to the list of results, so if we have Basf with B as endNode, we get {a,s,f,b}
 				result = append(result, currentNode.Parents)
 				secondtolast[currentNode.Parents[len(currentNode.Parents)-2]] = true
@@ -228,15 +242,17 @@ func ParallelBFS(startTitle string, endNode string) ([][]string, int64, int, int
 	var shortestlength int = 0
 	var result [][] string 
 	var numofcheckednodes int = 0
-	var numThreads int = 10
+	var numThreads int = 20
 	var elapsed int64
 	var wg sync.WaitGroup
-	array := make([]int, numThreads)
-	queue := initialBFS(startTitle)
 	shortestlengthavail := &shortestlength
 	resultavailable := &result
 	numofcheckednodesavail := &numofcheckednodes
 	elapsedavail := &elapsed
+	array := make([]int, numThreads)
+	queue := initialBFS(startTitle,endNode,numofcheckednodesavail,elapsedavail)
+	fmt.Println("🤖🤖🤖🤖🤖🤖🤖🤖")
+	printAllQueue(queue)
 	//divide queue into equal number of nodes per thread
 	for i := 0; i<numThreads; i++ {
 		array[i] = len(queue) / numThreads
@@ -256,10 +272,11 @@ func ParallelBFS(startTitle string, endNode string) ([][]string, int64, int, int
 			// fmt.Println("TES BACA QUEUE💀💀💀💀")
 			tes := queue[start:end]
 			// fmt.Println(len(tes))
+			// fmt.Println(tes[0])
 			multiBFS(tes, endNode, shortestlengthavail, resultavailable, numofcheckednodesavail, elapsedavail)
 		}(startIndex, endIndex)
 		startIndex = endIndex
 	}
 	wg.Wait()
-	return result,elapsed, shortestlength,numofcheckednodes
+	return result,elapsed,shortestlength,numofcheckednodes
 }

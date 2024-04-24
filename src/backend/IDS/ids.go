@@ -3,7 +3,7 @@ package ids
 import (
 	"fmt"
 	"strings"
-	"github.com/gocolly/colly"
+	"Tubes2_gomugomuno/Scrape"
 	"time"
 )
 
@@ -61,7 +61,7 @@ func DLS(root *Tree, endUrl string, path []string, iterasi int) [][]string {
 		fmt.Println("masuk atas", iterasi)
 		return [][]string{append(path, root.Value)}
 	} else if iterasi == 1 {
-		hasil_scrape := Scraper(root.Value)
+		hasil_scrape := Scrape.Scraper(root.Value)
 		if hasil_scrape == nil {
 			fmt.Println("masuk nil")
 			return [][]string{}
@@ -106,8 +106,8 @@ func IDS(startTitle string, endTitle string)  ([][]string, int64, int, int) {
 	start := time.Now()
 	isKetemu := false
 	iterasi := 1
-	startUrl := Convert(startTitle)
-	endUrl := Convert(endTitle)
+	startUrl := Scrape.Convert(startTitle)
+	endUrl := Scrape.Convert(endTitle)
 	root := createTree(startUrl)
 	result := [][]string{}
 	for !isKetemu {
@@ -125,41 +125,6 @@ func IDS(startTitle string, endTitle string)  ([][]string, int64, int, int) {
 	fmt.Println(root.getSumAll())
 	fmt.Println("Algorithm execution time:", elapsed, "ms")
 	return result, elapsed, iterasi+1, root.getSumAll() 
-}
-
-func Scraper(title string) []string {
-	c := colly.NewCollector()
-
-	var links []string
-	title = Convert(title)
-	c.OnHTML("div.mw-page-container a[href^='/wiki/']", func(h *colly.HTMLElement) {
-		link := h.Request.AbsoluteURL(h.Attr("href"))
-		link = strings.TrimPrefix(link, "https://en.wikipedia.org/wiki/")
-
-		if !strings.ContainsAny(link, ":/%") {
-            if !Contains(links, link) && link != title {
-                links = append(links, link)
-            }
-        }
-	})
-
-	c.Visit("https://en.wikipedia.org/wiki/" + title)
-
-	return links
-}
-
-func Convert(input string) string {
-	converted := strings.ReplaceAll(input, " ", "_")
-	return converted
-}
-
-func Contains(s []string, str string) bool {
-	for _, v := range s {
-		if v == str {
-			return true
-		}
-	}
-	return false
 }
 
 

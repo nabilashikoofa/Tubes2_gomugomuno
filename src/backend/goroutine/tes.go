@@ -83,6 +83,7 @@ func Scraper(title string) []string {
         result = append(result, link)
     }
 	fmt.Println(elapsed)
+	printStrings(result)
     return result
 }
 

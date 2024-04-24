@@ -9,8 +9,8 @@ export default function Header(){
         </div>
         <div className='menu'>
             <a href="#htu">Input</a>
-            <a href="#res">Result</a>
             <a href="#aboutus">About Us</a>
+            <a href="https://github.com/nabilashikoofa/Tubes2_gomugomuno">Github</a>
         </div>
         <img src={cloud}></img>
     </div>

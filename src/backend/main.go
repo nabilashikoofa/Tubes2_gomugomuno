@@ -7,7 +7,6 @@ import (
 	"Tubes2_gomugomuno/Scrape"
 	"fmt"
 	"net/http"
-	// "Tubes2_gomugomuno/IDS"
 )
 
 // TAMBAHAN EROR HANDLING, HANDLING GAADA WIKIPEDIA DENGAN KATA XX MISALNYA KRN TYPO

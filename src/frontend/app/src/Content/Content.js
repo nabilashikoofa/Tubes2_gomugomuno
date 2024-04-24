@@ -33,9 +33,12 @@ export default function Content(){
         fetch(`http://localhost:3000/api/bfs?startNode=${startNode}&endNode=${endNode}`)
             .then(response => {
                 if (!response.ok) {
-                    // throw new Error('Network response was not ok');
-                    alert('Link does not exist');
-                    return
+                    if (response.status === 0) {
+                        alert('Server is not yet started');
+                    } else {
+                        alert('Link does not exist');
+                    }
+                    return;
                 }
                 return response.json();
             })
@@ -52,19 +55,22 @@ export default function Content(){
     };
 
     const handleIDS = () => {
-        if (startNode==="" || endNode===""){
-            alert('Cannot be empty string')
-        }
         // Send startNode and endNode values to the server
         console.log("Start Node:", startNode);
         console.log("End Node:", endNode);
+        if (startNode==="" || endNode===""){
+            alert('Cannot be empty string')
+        }
 
         fetch(`http://localhost:3000/api/ids?startNode=${startNode}&endNode=${endNode}`)
         .then(response => {
             if (!response.ok) {
-                // throw new Error('Network response was not ok');
-                alert('Link does not exist');
-                return
+                if (response.status === 0) {
+                    alert('Server is not yet started');
+                } else {
+                    alert('Link does not exist');
+                }
+                return;
             }
             return response.json();
         })
@@ -115,7 +121,7 @@ export default function Content(){
                 Wow! We Found XXX with XXX degrees of separation from
                 XXX to XXX in XXX seconds
                 {/* Found {result.totalPaths} with {result.totalDegrees} degrees of separation from{" "}
-                {result.startNode} to {result.endNode} in {result.elapsedTime} seconds! */}
+                {result.startNode} to {result.endNode} in {result.elapsedTime} seconds!
             </p>  */}
             {/* {result && (
                 <div>

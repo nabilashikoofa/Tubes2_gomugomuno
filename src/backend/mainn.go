@@ -59,7 +59,7 @@
 
 // 	// result,elapsed, shortestlength,numofcheckednodes = bfs.BFS("Fanta_cake","Flour") //45613 - 38262 (2 degrees)
 
-// 	result, elapsed, shortestlength, numofcheckednodes = bfs.ParallelBFS("Fanta_cake","Flour") //45613 - 38262 (2 degrees)
+// 	result, elapsed, shortestlength, numofcheckednodes = bfs.ParallelBFS("Vector","Mathematics") //45613 - 38262 (2 degrees)
     
 // 	fmt.Println("Algorithm execution time:", elapsed, "ms")
 //     printResult(result)
