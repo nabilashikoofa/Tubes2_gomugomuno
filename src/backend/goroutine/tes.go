@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"time"
 	"sort"
 	"strings"
 	"github.com/gocolly/colly"
@@ -24,6 +23,7 @@ func main() {
 	links := Scraper(converted) 
 	sort.Strings(links)
 	fmt.Println("")
+	fmt.Println(len(links))
 	printStrings((links))
 
 }
@@ -60,8 +60,8 @@ func printStrings(slice []string) {
 // 	return links
 // }
 
+
 func Scraper(title string) []string {
-	start := time.Now()
 	c := colly.NewCollector()
 
     linksMap := make(map[string]bool) // Map to store links
@@ -77,16 +77,12 @@ func Scraper(title string) []string {
     })
 
     c.Visit("https://en.wikipedia.org/wiki/" + title)
-	elapsed := time.Since(start).Milliseconds()
     var result []string
     for link := range linksMap {
         result = append(result, link)
     }
-	fmt.Println(elapsed)
-	printStrings(result)
     return result
 }
-
 
 // Input without underscore
 // Output with underscore 
@@ -94,14 +90,4 @@ func Convert(input string) string {
 	converted := strings.ReplaceAll(input, " ", "_")
 	return converted
 }
-
-func Contains(s []string, str string) bool {
-	for _, v := range s {
-		if v == str {
-			return true
-		}
-	}
-	return false
-}
-
 

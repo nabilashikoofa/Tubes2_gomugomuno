@@ -8,7 +8,7 @@
 
 ## Table of Contents 💫
 * [The Game](#the-algorithm-👾)
-* [Tools](#tools-🔨)
+* [Tools](#tools-and-libraries-🔨)
 * [Requirements](#requirements-🫧)
 * [Setting Up](#setting-up-🍀)
 * [How To Use](#how-to-use-🪄)
@@ -29,8 +29,10 @@ IDS is a combination of depth-first search (DFS) and breadth-first search (BFS).
 - If the goal is not found and there are still nodes to explore at the current depth limit, increment the depth limit and repeat the search.
 - Repeat until final destination node is found or the entire search space is explored.
 
-## Tools 🔨
+## Tools and Libraries 🔨
 - React
+- Gocolly
+- D3 Graph
 
 ## Requirements 🫧
 - Have npm installed with `npm install`
@@ -39,10 +41,65 @@ IDS is a combination of depth-first search (DFS) and breadth-first search (BFS).
 - Clone this repository on your terminal `https://github.com/nabilashikoofa/Tubes2_gomugomuno.git`
 - Go to the `app` directory by using `cd src/frontend/app`
 - Type in `npm start` to start the server on your local browser
+- Open a new terminal, and go to backend dir using `cd src/backend`
+- Type in `go run main.go` to start the server, if your firewall blocks it, select `allow`.
+- You are done :>
 
 ## How to Use 🪄
 - Input the start node and end node with words as the Wikipedia title page
 - Choose between using BFS or IDS algorithm
-- The result will be displayed below as a graph
+- Please be patient and the result will be displayed below as a graph
 
+## File structure
+```
+.
+├── README.md
+├── doc
+│   └── gomugomuno.pdf
+├── src
+│   ├── frontend
+│   │   ├── package.json
+│   │   ├── package-lock.json
+│   │   └── app
+│   │       ├── BFS.go
+│   │       ├── BFSfunction.go
+│   │       ├── .gitignore
+│   │       ├── package.json
+│   │       ├── package-lock.json
+│   │       ├── README
+│   │       └── public
+│   │           └── *
+│   │       └── src
+│   │           ├── App.js
+│   │           ├── App.css
+│   │           └── About
+│   │               ├── About.go
+│   │               └── About.css
+│   │           └── Content
+│   │               ├── Content.js
+│   │               └── Content.css
+│   │           └── Footer
+│   │               ├── footer.js
+│   │               └── footer.css
+│   │           └── GraphComponent
+│   │               ├── GraphComponent.js
+│   │               └── GraphComponent.css
+│   │           └── Header
+│   │               ├── Header.js
+│   │               └── Header.css
+│   │           └── How To Use
+│   │               ├── HTU.css
+│   │               └── HTU.css
+│   ├── backend
+│   │   ├── go.mod
+│   │   ├── go.sum
+│   │   └── main.go
+│   │   └── BFS
+│   │       ├── BFS.go
+│   │       └── BFSfunction.go
+│   │   └── IDS
+│   │       └── ids.go
+│   │   └── Scrape
+│   │       └── scraper.go
+```
 ## Thankyou for trying our program :>

@@ -5,24 +5,6 @@ import (
 	"strings"
 )
 
-// func main() {
-// 	var input string
-
-// 	fmt.Println("Masukkan Title Wikipedia:")
-
-// 	input, _ = bufio.NewReader(os.Stdin).ReadString('\n')
-// 	input = strings.TrimSpace(input)
-
-// 	converted := convert(input)
-// 	fmt.Println(converted)
-
-// 	links := scraper(converted) 
-// 	fmt.Println(links)
-// }
-
-
-// Input with underscore
-// Output an Array
 func Scraper(title string) []string {
 	c := colly.NewCollector()
 
@@ -53,13 +35,5 @@ func Convert(input string) string {
 	return converted
 }
 
-func Contains(s []string, str string) bool {
-	for _, v := range s {
-		if v == str {
-			return true
-		}
-	}
-	return false
-}
 
 

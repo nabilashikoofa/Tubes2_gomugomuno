@@ -10,29 +10,12 @@ type Node struct {
 	Parents []string // Titles of parent nodes traversed to reach this node
 }
 
-// create empty Node
-
 // Node constructor, user defined
 func createNode(startTitle string, NodeParent []string) *Node{
 	return &Node{
 		Title: startTitle,
 		Parents: NodeParent,
 	}
-}
-
-// Decide if Node is visited before by check the title and the last queued Node at the Parents attribute
-// Also terminate cycles conditions instantly
-func isVisited(A *Node, queue []*Node) (bool){
-	// fmt.Println("TES MASUK ISVISITED")
-	for i := 0; i < len(queue); i++ {
-		if (len(queue[i].Parents)!=0){
-			if(A.Title == queue[i].Title && A.Parents[len(A.Parents)-1] == queue[i].Parents[len(queue[i].Parents)-1]){
-				return true
-			}
-		}
-	}
-	
-	return false
 }
 
 func printAllQueue(queue []*Node){
@@ -45,9 +28,6 @@ func printAllQueue(queue []*Node){
 			fmt.Println(queue[i].Parents[j])
 		}
 		fmt.Println()
-		// if (queue[i].Title=="Knowledge"){
-		// 	fmt.Scanln()
-		// }
 	}
 }
 
