@@ -29,6 +29,12 @@ class GraphComponent extends React.Component {
         return { nodes, links };
     };
 
+    componentDidUpdate(prevProps) {
+        if (this.props.result !== prevProps.result) {
+            this.setState({ dataArray: this.props.result });
+        }
+    }
+
     render() {
         const { dataArray } = this.state;
         const graphData = this.convertArrayToGraphData(dataArray);

@@ -38,14 +38,20 @@ export default function Content(){
                 if (!response.ok) {
                     if (response.status === 0) {
                         alert('Server is not yet started');
-                    } else {
+                    } else if (response.status === 404) {
                         alert('Link does not exist');
+                    } else if (response.status === 500) {
+                        alert('Server error');
+                    } else {
+                        alert('Unknown error');
                     }
                     return;
                 }
                 return response.json();
             })
             .then(data => {
+                if (!data) return;
+                
                 console.log("SUCCEED");
                 console.log(data); 
 
