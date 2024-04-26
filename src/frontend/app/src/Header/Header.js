@@ -1,6 +1,6 @@
 import React from 'react'
 import './Header.css'
-import cloud from '../MINICLOUD.png';
+import cloud from '../Assets/MINICLOUD.png';
 
 export default function Header(){
     return <div className='header'>
