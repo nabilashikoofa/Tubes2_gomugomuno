@@ -138,7 +138,6 @@ func multiBFS(queue []*Node, startNode string, endNode string, shortestlengthava
 			return
 		default:
 		numofcheckednodes++
-		// visitedNodes = append(visitedNodes, queue[0])	// mark as visited
 		currentNode := queue[0] //current branch is the start of the queue, dequeue
 	fmt.Println("🦄🦄🦄🦄🦄🦄🦄")
 	fmt.Println(len(currentNode.Parents))
@@ -181,6 +180,8 @@ func multiBFS(queue []*Node, startNode string, endNode string, shortestlengthava
 		*shortestlengthavailable = shortestlength
 		*resultavailable = result
 		*numofcheckednodesavail = numofcheckednodes
+		elapsed := time.Since(start).Milliseconds()
+		*elapsedavail = elapsed
 		fmt.Println("GOT BREAK🔨🔨")
 		fmt.Println(elapsedavail)
 		break
@@ -211,7 +212,6 @@ func multiBFS(queue []*Node, startNode string, endNode string, shortestlengthava
 				queue = queue[len(queue)-1:]
 				fmt.Println(len(queue))
 				fmt.Println("💎💎💎💎💎💎💎💎💎💎💎💎💎💎💎💎💎💎💎💎💎💎💎💎")
-				// printAllQueue(queue)
 				break
 				}	
 				if (!foundOneSol){
@@ -228,8 +228,7 @@ func multiBFS(queue []*Node, startNode string, endNode string, shortestlengthava
 			}
 		}
 	}
-	elapsed := time.Since(start).Milliseconds()
-	*elapsedavail = elapsed}
+}
 	
 }
 

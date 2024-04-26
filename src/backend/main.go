@@ -7,7 +7,6 @@ import (
 	"Tubes2_gomugomuno/Scrape"
 	"fmt"
 	"net/http"
-	"time"
 )
 
 // TAMBAHAN EROR HANDLING, HANDLING GAADA WIKIPEDIA DENGAN KATA XX MISALNYA KRN TYPO
@@ -76,8 +75,11 @@ func executeAlgorithm(w http.ResponseWriter, r *http.Request, algorithm Algorith
 		http.Error(w, "Invalid end node", http.StatusNotFound)
 		return
 	}
+
 	result, elapsed, shortestlength, numofcheckednodes := algorithm(startNode, endNode)
-    response := struct {
+    fmt.Println("👌 ",elapsed)
+
+	response := struct {
         Result  	[][]string `json:"result"`
         Elapsed 	int64      `json:"elapsed"`
         Shortest 	int        `json:"shortestlength"`
