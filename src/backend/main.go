@@ -105,7 +105,7 @@ func main() {
     })
     
     handleAlgorithm("/api/ids", func(w http.ResponseWriter, r *http.Request) {
-        executeAlgorithm(w, r, ids.IDS)
+        executeAlgorithm(w, r, ids.IDSParalel)
     })	
 
     fmt.Println("Server is running on :3000")
