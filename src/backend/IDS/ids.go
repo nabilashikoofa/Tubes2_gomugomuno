@@ -112,8 +112,9 @@ func IDSParalel(startTitle string, endTitle string) ([][]string, int64, int, int
 		iterasi++
 	}
 	// root.displayTreeWithLevel(0)
+	fmt.Println(len(visited))
 	elapsed := time.Since(start).Milliseconds()
-	return *resultavailable, elapsed, iterasi, root.getSumAll(), len(result)
+	return *resultavailable, elapsed, iterasi, len(visited), len(result)
 }
 
 func DLSParalel(root *Tree, endUrl string, path []string, iterasi int, resultavailable *[][]string, visited map[string]bool, ctx context.Context) {	
@@ -133,6 +134,7 @@ func DLSParalel(root *Tree, endUrl string, path []string, iterasi int, resultava
 				for _, sub := range hasil_scrape {
 					if !visited[sub] {
 						root.AddSubtree(sub)
+						visited[sub] = true
 						// fmt.Println("visited " + sub)
 						if strings.EqualFold(sub, endUrl) {
 							fmt.Println("Ketemuuu pathnya", iterasi)
