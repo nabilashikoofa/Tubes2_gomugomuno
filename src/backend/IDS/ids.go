@@ -70,7 +70,7 @@ func IDSParalel(startTitle string, endTitle string) ([][]string, int64, int, int
 	childRoot := Scrape.Scraper(startTitle)
 	numThreads := len(childRoot)
 	endTitle = Scrape.Convert(endTitle)
-	visited := make(map[string]bool)
+	// visited := make(map[string]bool)
 	path := []string{startTitle}
 	// visited[startTitle] = true
 	sisa := numThreads
