@@ -72,13 +72,13 @@ func IDSParalel(startTitle string, endTitle string) ([][]string, int64, int, int
 	endTitle = Scrape.Convert(endTitle)
 	visited := make(map[string]bool)
 	path := []string{startTitle}
-	visited[startTitle] = true
+	// visited[startTitle] = true
 	sisa := numThreads
 	resultavailable := &result
 	fmt.Println(numThreads)
 	for _, child := range childRoot {
 		root.AddSubtree(child)
-		visited[child] = true
+		// visited[child] = true
 		if strings.EqualFold(child, endTitle) {
 			*resultavailable = append(*resultavailable, []string{startTitle,child})
 			break
@@ -99,7 +99,7 @@ func IDSParalel(startTitle string, endTitle string) ([][]string, int64, int, int
 				wg.Add(1)
 				go func(akar *Tree) {
 					defer wg.Done()
-					DLSParalel(akar, endTitle, path, iterasi, resultavailable, visited, ctx)
+					DLSParalel(akar, endTitle, path, iterasi, resultavailable, ctx)
 				}(root.SubTree[x*maxNumThread + i])
 			}
 			wg.Wait()
@@ -108,19 +108,20 @@ func IDSParalel(startTitle string, endTitle string) ([][]string, int64, int, int
 			wg.Add(1)
 				go func(akar *Tree) {
 					defer wg.Done()
-					DLSParalel(akar, endTitle, path, iterasi, resultavailable, visited, ctx)
+					DLSParalel(akar, endTitle, path, iterasi, resultavailable, ctx)
 				}(root.SubTree[pengali*maxNumThread + r])	
 		}
 		wg.Wait()
 		iterasi++
 	}
 	// root.displayTreeWithLevel(0)
-	fmt.Println(len(visited))
+	// fmt.Println(len(visited))
+	fmt.Println(root.getSumAll())
 	elapsed := time.Since(start).Milliseconds()
-	return *resultavailable, elapsed, iterasi, len(visited), len(result)
+	return *resultavailable, elapsed, iterasi, root.getSumAll(), len(result)
 }
 
-func DLSParalel(root *Tree, endUrl string, path []string, iterasi int, resultavailable *[][]string, visited map[string]bool, ctx context.Context) {	
+func DLSParalel(root *Tree, endUrl string, path []string, iterasi int, resultavailable *[][]string, ctx context.Context) {	
 	select{
 	case <- ctx.Done():
 		return
@@ -135,18 +136,18 @@ func DLSParalel(root *Tree, endUrl string, path []string, iterasi int, resultava
 				return
 			} else {
 				for _, sub := range hasil_scrape {
-					if !visited[sub] {
-						root.AddSubtree(sub)
-						visited[sub] = true
-						// fmt.Println("visited " + sub)
-						if strings.EqualFold(sub, endUrl) {
-							fmt.Println("Ketemuuu pathnya", iterasi)
-							path := append(path,root.Value, sub)
-							fmt.Println(path)
-							// *resultavailable = append(*resultavailable, path)
-							*resultavailable = [][]string{path} 
-							return 
-						}
+
+					root.AddSubtree(sub)
+					
+					// fmt.Println("visited " + sub)
+					if strings.EqualFold(sub, endUrl) {
+						fmt.Println("Ketemuuu pathnya", iterasi)
+						path := append(path,root.Value, sub)
+						fmt.Println(path)
+						// *resultavailable = append(*resultavailable, path)
+						*resultavailable = [][]string{path} 
+						return 
+					
 					}					
 				} 
 				return
@@ -154,7 +155,7 @@ func DLSParalel(root *Tree, endUrl string, path []string, iterasi int, resultava
 		} else {
 			path = append(path, root.Value)
 			for _, child := range root.SubTree {
-				DLSParalel(child, endUrl, path, iterasi-1, resultavailable, visited, ctx)
+				DLSParalel(child, endUrl, path, iterasi-1, resultavailable, ctx)
 				if len(*resultavailable) > 0 {
 					break
 				}
