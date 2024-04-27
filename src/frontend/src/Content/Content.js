@@ -99,13 +99,15 @@ export default function Content(){
             </div>
         </div>
         <div className="result">
-            {result && (
+            {result && result.length > 0 ? (
                 <div>
                     <h1>Result</h1>
                     <p>Wow! We Found {path} path after checking {numofcheckednodes} nodes with {shortestlength} degrees of separation </p> 
                     <p>from {startNode} to {endNode} in {elapsed} seconds </p>
                     <GraphComponent result={result} />
                 </div>
+            ) : (
+                <p>Sadly we can't find a solution for this path</p>
             )}
         </div>
     </div> 
