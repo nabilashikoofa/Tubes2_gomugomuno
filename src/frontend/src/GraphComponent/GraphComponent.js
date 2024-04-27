@@ -17,12 +17,15 @@ class GraphComponent extends React.Component {
 
         dataArray.forEach((array) => {
             array.forEach((element, index) => {
-                if (!nodes.find((node) => node.id === element)) {
-                    nodes.push({ id: element });
+                const nodeName = element.replace(/_/g, ' ');
+                if (!nodes.find((node) => node.id === nodeName)) {
+                    nodes.push({ id: nodeName });
                 }
 
                 if (index < array.length - 1) {
-                    links.push({ source: array[index], target: array[index + 1] });
+                    const sourceName = array[index].replace(/_/g, ' '); 
+                    const targetName = array[index + 1].replace(/_/g, ' '); 
+                    links.push({ source: sourceName, target: targetName });
                 }
             });
         });

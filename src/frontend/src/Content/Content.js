@@ -10,6 +10,7 @@ export default function Content(){
     const [elapsed, setElapsed] = useState();
     const [shortestlength, setShortest] = useState();
     const [numofcheckednodes, setChecked] = useState();
+    const [path, setPath] = useState();
 
     const handleStartInputChange = (event) => {
         setStartNode(event.target.value);
@@ -60,6 +61,7 @@ export default function Content(){
                 setElapsed(data.elapsed / 1000);
                 setShortest(data.shortestlength);
                 setChecked(data.numofcheckednodes);
+                setPath(data.path);
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -100,7 +102,7 @@ export default function Content(){
             {result && (
                 <div>
                     <h1>Result</h1>
-                    <p>Wow! We Found {numofcheckednodes} path with {shortestlength} degrees of separation </p> 
+                    <p>Wow! We Found {path} path after checking {numofcheckednodes} nodes with {shortestlength} degrees of separation </p> 
                     <p>from {startNode} to {endNode} in {elapsed} seconds </p>
                     <GraphComponent result={result} />
                 </div>

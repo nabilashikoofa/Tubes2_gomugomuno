@@ -49,7 +49,7 @@ func printResult(result [][]string) {
 	}
 }
 
-type AlgorithmFunc func(startNode, endNode string) ([][]string, int64, int, int)
+type AlgorithmFunc func(startNode, endNode string) ([][]string, int64, int, int, int)
 
 func executeAlgorithm(w http.ResponseWriter, r *http.Request, algorithm AlgorithmFunc) {
 	startNode := r.URL.Query().Get("startNode")
@@ -76,7 +76,7 @@ func executeAlgorithm(w http.ResponseWriter, r *http.Request, algorithm Algorith
 		return
 	}
 
-	result, elapsed, shortestlength, numofcheckednodes := algorithm(startNode, endNode)
+	result, elapsed, shortestlength, numofcheckednodes, path := algorithm(startNode, endNode)
     fmt.Println("👌 ",elapsed)
 
 	response := struct {
@@ -84,7 +84,8 @@ func executeAlgorithm(w http.ResponseWriter, r *http.Request, algorithm Algorith
         Elapsed 	int64      `json:"elapsed"`
         Shortest 	int        `json:"shortestlength"`
         Checked 	int        `json:"numofcheckednodes"`
-    }{result, elapsed, shortestlength, numofcheckednodes}
+		Path 		int         `json:"path"`
+    }{result, elapsed, shortestlength, numofcheckednodes, path}
 
 	json.NewEncoder(w).Encode(response)
 }
