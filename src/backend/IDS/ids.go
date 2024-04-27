@@ -72,13 +72,16 @@ func IDSParalel(startTitle string, endTitle string) ([][]string, int64, int, int
 	endTitle = Scrape.Convert(endTitle)
 	visited := make(map[string]bool)
 	path := []string{startTitle}
+	visited[startTitle] = true
 	sisa := numThreads
 	resultavailable := &result
 	fmt.Println(numThreads)
 	for _, child := range childRoot {
 		root.AddSubtree(child)
+		visited[child] = true
 		if strings.EqualFold(child, endTitle) {
 			*resultavailable = append(*resultavailable, []string{startTitle,child})
+			break
 		}
 	}
 	if numThreads > maxNumThread {
