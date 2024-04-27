@@ -76,15 +76,6 @@ func DLS(root *Tree, endUrl string, path []string, iterasi int) [][]string {
 					return [][]string{paths}
 				}
 			}
-			// for _, url := range root.SubTree {
-			// 	fmt.Println("asa " + url.Value)
-			// 	if strings.EqualFold(url.Value, endUrl) {
-			// 		fmt.Println("masuk dalam", iterasi)
-			// 		paths := append(path,root.Value, url.Value)
-			// 		fmt.Println(paths)
-			// 		return [][]string{paths}
-			// 	}
-			// }
 			return [][]string{}
 		}
 	} else {
@@ -102,7 +93,7 @@ func DLS(root *Tree, endUrl string, path []string, iterasi int) [][]string {
 	}
 }
 
-func IDS(startTitle string, endTitle string)  ([][]string, int64, int, int) {
+func IDS(startTitle string, endTitle string)  ([][]string, int64, int, int, int) {
 	start := time.Now()
 	isKetemu := false
 	iterasi := 1
@@ -116,15 +107,16 @@ func IDS(startTitle string, endTitle string)  ([][]string, int64, int, int) {
 		result = DLS(root, endUrl, []string{}, iterasi)
 		if len(result) != 0 {
 			isKetemu = true
+		} else {
+			iterasi++
 		}
-		iterasi++
 		fmt.Println("hasil = ", result)
 	}
 	// root.displayTreeWithLevel(0);
 	elapsed := time.Since(start).Milliseconds()
 	fmt.Println(root.getSumAll())
 	fmt.Println("Algorithm execution time:", elapsed, "ms")
-	return result, elapsed, iterasi+1, root.getSumAll() 
+	return result, elapsed, iterasi, root.getSumAll(), len(result) 
 }
 
 
