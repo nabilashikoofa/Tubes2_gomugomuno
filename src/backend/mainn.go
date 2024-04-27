@@ -52,11 +52,12 @@ func main() {
     var elapsed int64
     var shortestlength int
     var numofcheckednodes int
-    fmt.Println("Starting Main...")
+    var pnjg int
+	fmt.Println("Starting Main...")
     timee := time.Now()
+	
 
-
-	result, elapsed, shortestlength, numofcheckednodes = bfs.ParallelBFS("Joko Widodo","YouTube") //45613 - 38262 (2 degrees)
+	result, elapsed, shortestlength, numofcheckednodes, pnjg = bfs.ParallelBFS("Vector","Knowledge") //45613 - 38262 (2 degrees)
     
 	fmt.Println("Algorithm execution time:", elapsed, "ms")
     printResult(result)
@@ -64,6 +65,7 @@ func main() {
     fmt.Println("Shortest length: ",shortestlength)
     fmt.Println("Nodes checked:",numofcheckednodes)
     elapsedd := time.Since(timee).Milliseconds()
-    fmt.Println("ELAPSED REAL: ",elapsedd)
+    fmt.Println("Panjang: ",pnjg)
+	fmt.Println("ELAPSED REAL: ",elapsedd)
   
 }

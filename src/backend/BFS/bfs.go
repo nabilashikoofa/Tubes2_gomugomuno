@@ -15,96 +15,6 @@ func printStrings(slice []string) {
 }
 
 
-
-// // func BFS(startTitle string, endNode string) {
-// func BFS(startTitle string, endNode string) ([][]string, int64, int, int){
-// 	start := time.Now()
-// 	firstNode := createNode(startTitle,nil)	// node pertama
-// 	shortestlength:= 0
-// 	numofcheckednodes := 0
-// 	var queue []*Node		// simpul hidup
-// 	var result [][]string		// list of answers
-// 	visited := make(map[string]string)
-// 	secondtolast := make(map[string]bool) 
-// 	//second to last map is for efficiency of not checking the second to last parent nodes that have found in a solution
-// 	//for example i went from Vector to Mathematics and i got it in the order (Vector,Euclidean_vector,Mathematics). now all the nodes i've created in the queue that has the parent euclidean vector init does not need to be checked, since we already confirm that the endnode is reachable, thus cutting the time making it more faster.  
-// 	queue = append(queue, firstNode)	// masukkan node pertama ke dalam queue simpul hidup
-// 	visited[firstNode.Title] = ""
-// 	temptitle := Scrape.Scraper(startTitle)
-// 	for _,title := range temptitle{
-// 		var tempparent []string = append(firstNode.Parents, startTitle) 
-// 		queue = append(queue, createNode(title,tempparent))
-// 	}
-	
-// 	// parse for startNode and enqueue
-// 	var hasFound bool = false
-// 	var foundOneSol bool = false
-// 	for len(queue) > 0 {		//while queue is not empty
-// 		fmt.Print("Panjang queue skrg:")
-// 		fmt.Println(len(queue))
-// 		numofcheckednodes++
-// 		currentNode := queue[0] //current branch is the start of the queue, dequeue
-// 		fmt.Println(">>>>>>>>>>>>>> Skrg kita cek Node: ")
-// 		currentNode.Print()
-// 		fmt.Println()
-// 		queue = queue[1:]
-// 		// currentNode.Parents = append(currentNode.Parents,currentNode.Title)
-// 		if _, ok := secondtolast[currentNode.Title]; ok {
-// 			continue
-// 		}
-// 		if (len(currentNode.Parents)>shortestlength) && hasFound{
-// 			fmt.Println("ALREADY GOT BETTER ANS STAHP⛔⛔⛔")
-// 			continue
-// 		}
-// 		// grab only the shortest solution or when we have no solution at all.
-// 		if (currentNode.Title == endNode){
-// 			fmt.Println("Destination Reached!")
-// 			fmt.Println("😱😱😱😱😱😱😱😱")
-// 			if (shortestlength==0){	//assign when first time encountering solution
-// 				shortestlength = len(currentNode.Parents)
-// 			} 
-// 			if (len(currentNode.Parents)==shortestlength){
-// 				currentNode.Parents = append(currentNode.Parents, currentNode.Title)		// also add the endNode to the list of results, so if we have Basf with B as endNode, we get {a,s,f,b}
-// 				result = append(result, currentNode.Parents)
-// 				secondtolast[currentNode.Parents[len(currentNode.Parents)-2]] = true
-// 				hasFound = true
-// 				fmt.Println("SOLUSI LAINNN???!!🔍🔍🔍🔍🔍🔍🔍🔍🔍🔍🔍🔍🔍🔍🔍")
-// 				// // ini testing 1 solusi dulu ya:")"
-// 				fmt.Println("GOT BREAK🔨🔨")
-// 				break
-// 			}
-// 		} else{
-// 			// parse and enqueue/create node
-// 			// dont forget to change the newly made Node Parents with the copy of currentNode.Parents + currentNode.Title
-// 			fmt.Println("WAITING FOR SCRAPER🫧🫧🫧🫧🫧🫧")
-// 			var temptitle []string = Scrape.Scraper(currentNode.Title)	// get a list of Node titles from parsing currentNode
-// 			var tempparent []string = currentNode.Parents		// get the list of parent Node from the currentNode
-// 			tempparent = append(tempparent, currentNode.Title)	// add the currentNode into the list of parent Node
-// 			for i := 0; i < len(temptitle); i++ {
-// 				A := createNode(temptitle[i],tempparent)
-// 				if (temptitle[i]==endNode){	//ternyata waktu scraping udah ketemu jadi kt jangan scrape lagi biar hemat waktu
-// 					foundOneSol = true
-// 					queue = append(queue, A)
-// 				}	
-// 				if (!foundOneSol){
-// 					lastVisited, ok := visited[A.Title]
-// 					if ok && lastVisited == A.Parents[len(A.Parents)-1] {
-// 						continue // Skip if already visited with the same parent
-// 					}
-// 					// append the newly made node into the queue
-// 					queue = append(queue, A)
-// 					visited[A.Title] = A.Parents[len(A.Parents)-1]
-// 				}
-				
-
-// 			}
-// 		}
-// 	}
-// 	elapsed := time.Since(start).Milliseconds()
-// 	return result,elapsed,shortestlength,numofcheckednodes
-// }
-
-
 // return the list of Nodes from startTitle created inside a queue 
 func initialBFS(startTitle string) ([]*Node){
 	firstNode := createNode(startTitle,nil)	// node pertama
@@ -119,7 +29,9 @@ func initialBFS(startTitle string) ([]*Node){
 
 	
 // find a solution inside a queue (the queue has been divided by the number of threads)
-func multiBFS(queue []*Node, startNode string, endNode string, shortestlengthavailable *int, resultavailable *[][]string, numofcheckednodesavail *int, elapsedavail *int64, ctx context.Context) {
+func multiBFS(queue []*Node, startNode string, endNode string, 
+	shortestlengthavailable *int, resultavailable *[][]string, 
+	numofcheckednodesavail *int, elapsedavail *int64, ctx context.Context) {
 	var result [][]string		// list of answers
 	var hasFound bool = false
 	var foundOneSol bool = false
@@ -127,8 +39,6 @@ func multiBFS(queue []*Node, startNode string, endNode string, shortestlengthava
 	shortestlength:= 0
 	visited := make(map[string]string)
 	secondtolast := make(map[string]bool) 
-	//second to last map is for efficiency of not checking the second to last parent nodes that have found in a solution
-	//for example i went from Vector to Mathematics and i got it in the order (Vector,Euclidean_vector,Mathematics). now all the nodes i've created in the queue that has the parent euclidean vector init does not need to be checked, since we already confirm that the endnode is reachable, thus cutting the time making it more faster.  
 	start := time.Now()
 	
 	
@@ -151,6 +61,7 @@ func multiBFS(queue []*Node, startNode string, endNode string, shortestlengthava
 		fmt.Println(*shortestlengthavailable)
 		fmt.Println(*resultavailable)
 		fmt.Println("THREAD DIHENTIKANNN⛔⛔⛔⛔⛔⛔⛔")
+		*numofcheckednodesavail += numofcheckednodes
 		return
 	}
 	if _, ok := secondtolast[currentNode.Title]; ok {
@@ -159,24 +70,24 @@ func multiBFS(queue []*Node, startNode string, endNode string, shortestlengthava
 	}
 	if (len(currentNode.Parents)>=shortestlength) && hasFound{
 		fmt.Println("ALREADY GOT BETTER ANS STAHP⛔⛔⛔")
+		*numofcheckednodesavail += numofcheckednodes
 		return
 	}
 	// grab only the shortest solution or when we have no solution at all.
 	if (currentNode.Title == endNode){
 		fmt.Println("Destination Reached!")
 		fmt.Println("😱😱😱😱😱😱😱😱")
-		fmt.Println("😱😱😱😱😱😱😱😱")
 		if (shortestlength==0){	//assign when first time encountering solution
 			shortestlength = len(currentNode.Parents)
 			} 
 		if (len(currentNode.Parents)<=shortestlength){
-			currentNode.Parents = append(currentNode.Parents, currentNode.Title)		// also add the endNode to the list of results, so if we have Basf with B as endNode, we get {a,s,f,b}
+			currentNode.Parents = append(currentNode.Parents, currentNode.Title)	
 			result = append(result, currentNode.Parents)
 			secondtolast[currentNode.Parents[len(currentNode.Parents)-2]] = true
 		hasFound = true
 		*shortestlengthavailable = shortestlength
 		*resultavailable = result
-		*numofcheckednodesavail = numofcheckednodes
+		*numofcheckednodesavail += numofcheckednodes
 		elapsed := time.Since(start).Milliseconds()
 		*elapsedavail = elapsed
 		fmt.Println("GOT BREAK🔨🔨")
