@@ -39,7 +39,9 @@ IDS is a combination of depth-first search (DFS) and breadth-first search (BFS).
 
 ## Setting Up 🍀
 - Clone this repository on your terminal `https://github.com/nabilashikoofa/Tubes2_gomugomuno.git`
-- Go to the `app` directory by using `cd src/frontend/app`
+- Go to the `frontend` directory by using `cd src/frontend`
+- Type in `npm install` to start the server on your local browser
+- If error occurs after npm install, type in `npm install react-d3-graph@2.6.0 --legacy-peer-deps`.
 - Type in `npm start` to start the server on your local browser
 - Open a new terminal, and go to backend dir using `cd src/backend`
 - Type in `go run main.go` to start the server, if your firewall blocks it, select `allow`.
@@ -58,47 +60,46 @@ IDS is a combination of depth-first search (DFS) and breadth-first search (BFS).
 │   └── gomugomuno.pdf
 ├── src
 │   ├── frontend
+│   │   ├── .gitignore
 │   │   ├── package.json
 │   │   ├── package-lock.json
-│   │   └── app
-│   │       ├── BFS.go
-│   │       ├── BFSfunction.go
-│   │       ├── .gitignore
-│   │       ├── package.json
-│   │       ├── package-lock.json
-│   │       ├── README
-│   │       └── public
-│   │           └── *
+│   │   ├── README
+│   │   └── public
 │   │       └── src
 │   │           ├── App.js
 │   │           ├── App.css
-│   │           └── About
-│   │               ├── About.go
-│   │               └── About.css
-│   │           └── Content
-│   │               ├── Content.js
-│   │               └── Content.css
-│   │           └── Footer
-│   │               ├── footer.js
-│   │               └── footer.css
-│   │           └── GraphComponent
-│   │               ├── GraphComponent.js
-│   │               └── GraphComponent.css
-│   │           └── Header
-│   │               ├── Header.js
-│   │               └── Header.css
+│   │           ├── index.js
+│   │           ├── index.css
+│   │           ├── package-lock.json
+│   │           ├── package.json
+│   │           ├── About
+│   │           │   ├── About.js
+│   │           │   └── About.css
+│   │           ├── Content
+│   │           │   ├── Content.js
+│   │           │   └── Content.css
+│   │           ├── Footer
+│   │           │   ├── footer.js
+│   │           │   └── footer.css
+│   │           ├── GraphComponent
+│   │           │   ├── GraphComponent.js
+│   │           │   └── GraphComponent.css
+│   │           ├── Header
+│   │           │   ├── Header.js
+│   │           │   └── Header.css
 │   │           └── How To Use
-│   │               ├── HTU.css
+│   │               ├── HTU.js
 │   │               └── HTU.css
 │   ├── backend
 │   │   ├── go.mod
 │   │   ├── go.sum
-│   │   └── main.go
-│   │   └── BFS
-│   │       ├── BFS.go
-│   │       └── BFSfunction.go
-│   │   └── IDS
-│   │       └── ids.go
+│   │   ├── Dockerfile
+│   │   ├── main.go
+│   │   ├── BFS
+│   │   │   ├── BFS.go
+│   │   │   └── BFSfunction.go
+│   │   ├── IDS
+│   │   │   └── ids.go
 │   │   └── Scrape
 │   │       └── scraper.go
 ```
