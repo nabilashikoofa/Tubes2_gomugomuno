@@ -7,13 +7,13 @@
 | Nabila Shikoofa Muida     | 13522069 |
 
 ## Table of Contents 💫
-* [The Game](#the-algorithm-👾)
-* [Tools](#tools-and-libraries-🔨)
-* [Requirements](#requirements-🫧)
-* [Setting Up](#setting-up-🍀)
-* [How To Use](#how-to-use-🪄)
+* [The Game](#the-algorithm) 👾 
+* [Tools](#tools-and-libraries) 🔨
+* [Requirements](#requirements) 🫧
+* [Setting Up](#setting-up) 🍀
+* [How To Use](#how-to-use) 🪄
 
-## The Algorithm 👾
+## The Algorithm
 BFS (Breadth First Search)
 Graph traversal algorithm that starts from the root node and explores all of its neighbors at the present depth level before moving on to the nodes at the next level of depth. Check all nodes from the same level before moving on to the next level. Using queue data structure. 
 - Start from root node.
@@ -29,15 +29,15 @@ IDS is a combination of depth-first search (DFS) and breadth-first search (BFS).
 - If the goal is not found and there are still nodes to explore at the current depth limit, increment the depth limit and repeat the search.
 - Repeat until final destination node is found or the entire search space is explored.
 
-## Tools and Libraries 🔨
+## Tools and Libraries
 - React
 - Gocolly
 - D3 Graph
 
-## Requirements 🫧
+## Requirements
 - Have npm installed with `npm install`
 
-## Setting Up 🍀
+## Setting Up
 - Clone this repository on your terminal `https://github.com/nabilashikoofa/Tubes2_gomugomuno.git`
 - Go to the `frontend` directory by using `cd src/frontend`
 - Type in `npm install` to start the server on your local browser
@@ -47,7 +47,7 @@ IDS is a combination of depth-first search (DFS) and breadth-first search (BFS).
 - Type in `go run main.go` to start the server, if your firewall blocks it, select `allow`.
 - You are done :>
 
-## How to Use 🪄
+## How to Use
 - Input the start node and end node with words as the Wikipedia title page
 - Choose between using BFS or IDS algorithm
 - Please be patient and the result will be displayed below as a graph
